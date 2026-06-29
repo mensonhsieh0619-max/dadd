@@ -8,129 +8,56 @@ const ROLES = {
     admin: "系統管理員"
 };
 
-const roleHomeSection = {
-    user: "user-dashboard-section",
-    coach: "coach-dashboard-section",
-    nutritionist: "nutrition-dashboard-section",
-    admin: "admin-dashboard-section"
+const ROLE_PAGES = {
+    user: "app-user.html",
+    coach: "app-coach.html",
+    nutritionist: "app-nutrition.html",
+    admin: "app-admin.html"
 };
 
-const rolePermissions = {
-    guest: [
-        "home-section",
-        "account-login-section",
-        "account-register-section"
-    ],
-    user: [
-        "home-section",
-        "user-dashboard-section",
-        "profile-section",
-        "health-input-section",
-        "health-trend-section",
-        "ai-health-section",
-        "fhir-viewer-section",
-        "share-section",
-        "registration-section",
-        "my-registration-section",
-        "notification-section"
-    ],
-    coach: [
-        "home-section",
-        "coach-dashboard-section",
-        "student-list-section",
-        "student-exercise-section",
-        "student-heart-rate-section",
-        "training-advice-section",
-        "training-record-section",
-        "notification-section"
-    ],
-    nutritionist: [
-        "home-section",
-        "nutrition-dashboard-section",
-        "case-list-section",
-        "bmi-analysis-section",
-        "weight-trend-section",
-        "blood-pressure-section",
-        "diet-advice-section",
-        "nutrition-record-section",
-        "notification-section"
-    ],
-    admin: [
-        "home-section",
-        "admin-dashboard-section",
-        "account-management-section",
-        "user-management-section",
-        "fhir-record-section",
-        "observation-record-section",
-        "authorization-record-section",
-        "blockchain-section",
-        "registration-list-section",
-        "registration-review-section",
-        "notification-section",
-        "system-setting-section"
-    ]
-};
-
-const NAV_ITEMS = {
-    guest: [
-        ["home-section", "首頁"],
-        ["account-login-section", "帳號登入"],
-        ["account-register-section", "帳號註冊"]
-    ],
-    user: [
-        ["home-section", "首頁"],
-        ["user-dashboard-section", "一般使用者首頁"],
-        ["profile-section", "個人資料設定"],
-        ["health-input-section", "新增健康資料"],
-        ["health-trend-section", "健康趨勢"],
-        ["ai-health-section", "AI 健康建議"],
-        ["fhir-viewer-section", "FHIR JSON"],
-        ["share-section", "授權分享"],
-        ["registration-section", "競賽報名"],
-        ["my-registration-section", "我的報名"],
-        ["notification-section", "通知中心"]
-    ],
-    coach: [
-        ["home-section", "首頁"],
-        ["coach-dashboard-section", "健身教練首頁"],
-        ["student-list-section", "學員列表"],
-        ["student-exercise-section", "運動紀錄"],
-        ["student-heart-rate-section", "心率趨勢"],
-        ["training-advice-section", "AI 訓練建議"],
-        ["training-record-section", "訓練紀錄"],
-        ["notification-section", "通知中心"]
-    ],
-    nutritionist: [
-        ["home-section", "首頁"],
-        ["nutrition-dashboard-section", "營養師首頁"],
-        ["case-list-section", "個案列表"],
-        ["bmi-analysis-section", "BMI 分析"],
-        ["weight-trend-section", "體重趨勢"],
-        ["blood-pressure-section", "血壓提醒"],
-        ["diet-advice-section", "AI 飲食建議"],
-        ["nutrition-record-section", "營養紀錄"],
-        ["notification-section", "通知中心"]
-    ],
-    admin: [
-        ["home-section", "首頁"],
-        ["admin-dashboard-section", "系統管理員首頁"],
-        ["account-management-section", "帳號管理"],
-        ["user-management-section", "使用者管理"],
-        ["fhir-record-section", "FHIR Resource"],
-        ["observation-record-section", "Observation"],
-        ["authorization-record-section", "授權紀錄"],
-        ["blockchain-section", "區塊鏈紀錄"],
-        ["registration-list-section", "報名列表"],
-        ["registration-review-section", "報名審核"],
-        ["notification-section", "通知中心"],
-        ["system-setting-section", "系統設定"]
-    ]
+const SECTION_LABELS = {
+    "profile-section": "個人資料設定",
+    "user-dashboard-section": "使用者首頁",
+    "coach-dashboard-section": "教練首頁",
+    "nutrition-dashboard-section": "營養師首頁",
+    "admin-dashboard-section": "系統管理員首頁",
+    "health-input-section": "新增健康資料",
+    "health-trend-section": "健康趨勢",
+    "ai-health-section": "AI 健康建議",
+    "fhir-viewer-section": "FHIR JSON",
+    "share-section": "授權分享",
+    "registration-section": "競賽報名",
+    "my-registration-section": "我的報名",
+    "student-list-section": "學員列表",
+    "student-exercise-section": "學員運動紀錄",
+    "student-heart-rate-section": "學員心率趨勢",
+    "training-advice-section": "AI 訓練建議",
+    "training-record-section": "訓練紀錄",
+    "case-list-section": "個案列表",
+    "bmi-analysis-section": "BMI 分析",
+    "weight-trend-section": "體重趨勢",
+    "blood-pressure-section": "血壓提醒",
+    "diet-advice-section": "AI 飲食建議",
+    "nutrition-record-section": "營養紀錄",
+    "account-management-section": "帳號管理",
+    "user-management-section": "使用者管理",
+    "fhir-record-section": "FHIR Resource",
+    "observation-record-section": "Observation 紀錄",
+    "authorization-record-section": "授權紀錄",
+    "blockchain-section": "區塊鏈紀錄",
+    "registration-list-section": "報名列表",
+    "registration-review-section": "報名審核",
+    "system-setting-section": "系統設定",
+    "notification-section": "通知中心"
 };
 
 let state = loadState();
-let currentSection = "home-section";
+let currentSection = "";
 let trendRange = 7;
 const chartPoints = {};
+const _charts = {};
+
+// ─── State ────────────────────────────────────────────────────────────
 
 function createDefaultState() {
     return {
@@ -154,55 +81,11 @@ function createDefaultState() {
             { id: "HR-003", accountId: "ACC-USER-DEMO", date: "2026-06-26", systolic: 126, diastolic: 82, weight: 70.8, height: 170, heartRate: 74, steps: 10400, exercise: 55, bmi: 24.5 }
         ],
         authorizations: [
-            {
-                id: "AUTH-20260628-001",
-                patientId: "ACC-USER-DEMO",
-                patientName: "王小明",
-                targetRole: "coach",
-                targetName: "Coach Mike",
-                dataScopes: ["運動紀錄", "心率", "步數"],
-                duration: "永久授權",
-                status: "有效",
-                hash: "0xA7F391BC8E44",
-                createdAt: "2026-06-28 10:30",
-                expiredAt: "永久授權"
-            },
-            {
-                id: "AUTH-20260628-002",
-                patientId: "ACC-USER-DEMO",
-                patientName: "王小明",
-                targetRole: "nutritionist",
-                targetName: "陳營養師",
-                dataScopes: ["BMI", "體重", "血壓"],
-                duration: "永久授權",
-                status: "有效",
-                hash: "0x4B21E0889F02",
-                createdAt: "2026-06-28 10:35",
-                expiredAt: "永久授權"
-            }
+            { id: "AUTH-20260628-001", patientId: "ACC-USER-DEMO", patientName: "王小明", targetRole: "coach", targetName: "李教練", dataScopes: ["運動紀錄", "心率", "步數"], duration: "永久授權", status: "有效", hash: "0xA7F391BC8E44", createdAt: "2026-06-28 10:30", expiredAt: "永久授權" },
+            { id: "AUTH-20260628-002", patientId: "ACC-USER-DEMO", patientName: "王小明", targetRole: "nutritionist", targetName: "陳營養師", dataScopes: ["BMI", "體重", "血壓"], duration: "永久授權", status: "有效", hash: "0x4B21E0889F02", createdAt: "2026-06-28 10:35", expiredAt: "永久授權" }
         ],
         registrations: [
-            {
-                id: "REG-20260623-001",
-                accountId: "ACC-USER-DEMO",
-                teamName: "FHIR 健康隊",
-                projectName: "AI 健康追蹤與運動管理平台",
-                category: "運動健康",
-                leaderName: "王小明",
-                email: "test@example.com",
-                phone: "0912345678",
-                organization: "XX大學",
-                members: ["陳小華", "林小美"],
-                description: "以 FHIR 串接健康紀錄，並提供 AI 建議與角色權限管理。",
-                roles: "user, coach, nutritionist, admin",
-                fhirResources: "Patient, Observation, Practitioner",
-                githubUrl: "https://github.com/example/ai-health",
-                demoUrl: "",
-                note: "",
-                status: "待審核",
-                reviewComment: "",
-                createdAt: "2026-06-23 10:30"
-            }
+            { id: "REG-20260623-001", accountId: "ACC-USER-DEMO", teamName: "FHIR 健康隊", projectName: "AI 健康追蹤與運動管理平台", category: "運動健康", leaderName: "王小明", email: "test@example.com", phone: "0912345678", organization: "XX大學", members: ["陳小華", "林小美"], description: "以 FHIR 串接健康紀錄，並提供 AI 建議與角色權限管理。", roles: "user, coach, nutritionist, admin", fhirResources: "Patient, Observation, Practitioner", githubUrl: "https://github.com/example/ai-health", demoUrl: "", note: "", status: "待審核", reviewComment: "", createdAt: "2026-06-23 10:30" }
         ],
         trainingRecords: [
             { id: "TR-001", coachId: "ACC-COACH-DEMO", studentName: "王小明", title: "本週訓練建議", content: "維持每週 150 分鐘中等強度有氧，加入 2 次肌力訓練。", createdAt: "2026-06-24 14:00" }
@@ -228,10 +111,10 @@ function initDefaultAccounts() {
         { id: "ACC-NUTRITION-DEMO", name: "陳營養師", email: "nutrition01@example.com", username: "nutrition01", password: "123456", phone: "0933555666", organization: "營養照護中心", role: "nutritionist", status: "active", createdAt: "2026-06-23 10:40" },
         { id: "ACC-ADMIN-DEMO", name: "系統管理員", email: "admin01@example.com", username: "admin01", password: "123456", phone: "0944777888", organization: "平台管理部", role: "admin", status: "active", createdAt: "2026-06-23 10:45" }
     ];
-
     defaults.forEach((account) => {
-        const exists = state.accounts.some((item) => item.username === account.username);
-        if (!exists) state.accounts.push(account);
+        if (!state.accounts.some((item) => item.username === account.username)) {
+            state.accounts.push(account);
+        }
     });
 }
 
@@ -242,8 +125,7 @@ function loadState() {
         if (!raw) return base;
         const loaded = JSON.parse(raw);
         const merged = {
-            ...base,
-            ...loaded,
+            ...base, ...loaded,
             patient: { ...base.patient, ...(loaded.patient || {}) },
             accounts: Array.isArray(loaded.accounts) ? loaded.accounts : base.accounts,
             healthRecords: Array.isArray(loaded.healthRecords) ? loaded.healthRecords : base.healthRecords,
@@ -259,8 +141,8 @@ function loadState() {
             bmi: calculateBMI(record.weight, record.height || merged.patient.height)
         }));
         return merged;
-    } catch (error) {
-        console.warn("loadState failed", error);
+    } catch (e) {
+        console.warn("loadState failed", e);
         return base;
     }
 }
@@ -269,17 +151,21 @@ function saveState() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
-function getCurrentRole() {
-    return state.role || "guest";
-}
+// ─── Auth ─────────────────────────────────────────────────────────────
+
+function getCurrentRole() { return state.role || "guest"; }
 
 function currentAccount() {
     if (!state.currentAccount) return null;
-    return state.accounts.find((account) => account.id === state.currentAccount?.id || account.username === state.currentAccount?.username) || state.currentAccount;
+    return state.accounts.find((a) => a.id === state.currentAccount?.id || a.username === state.currentAccount?.username) || state.currentAccount;
 }
 
-function isLoggedIn() {
-    return Boolean(state.demoMode || state.currentAccount);
+function isLoggedIn() { return Boolean(state.demoMode || state.currentAccount); }
+
+function requireAuth(expectedRole) {
+    if (!isLoggedIn() || state.role !== expectedRole) {
+        window.location.href = "index.html";
+    }
 }
 
 function registerAccount(event) {
@@ -297,71 +183,40 @@ function registerAccount(event) {
         createdAt: nowText()
     };
     const confirmPassword = valueOf("register-password-confirm");
-
-    if (Object.values(account).some((value) => String(value).trim() === "")) {
-        showToast("所有欄位皆為必填");
-        return;
-    }
-    if (account.password.length < 6) {
-        showToast("密碼至少 6 碼");
-        return;
-    }
-    if (account.password !== confirmPassword) {
-        showToast("密碼與確認密碼不一致");
-        return;
-    }
-    if (state.accounts.some((item) => item.username.toLowerCase() === account.username.toLowerCase())) {
-        showToast("帳號不可重複");
-        return;
-    }
-    if (state.accounts.some((item) => item.email.toLowerCase() === account.email.toLowerCase())) {
-        showToast("Email 不可重複");
-        return;
-    }
-
+    if (Object.values(account).some((v) => String(v).trim() === "")) { showToast("所有欄位皆為必填"); return; }
+    if (account.password.length < 6) { showToast("密碼至少 6 碼"); return; }
+    if (account.password !== confirmPassword) { showToast("密碼與確認密碼不一致"); return; }
+    if (state.accounts.some((a) => a.username.toLowerCase() === account.username.toLowerCase())) { showToast("帳號不可重複"); return; }
+    if (state.accounts.some((a) => a.email.toLowerCase() === account.email.toLowerCase())) { showToast("Email 不可重複"); return; }
     state.accounts.push(account);
     addNotification(account.id, "帳號註冊成功", `已建立 ${ROLES[account.role]} 帳號。`);
     saveState();
     event.target.reset();
     showToast("註冊成功，請登入");
-    showSection("account-login-section");
+    switchAuthTab("login");
 }
 
 function loginAccount(event) {
     event.preventDefault();
     const username = valueOf("login-username");
     const password = valueOf("login-password");
-    const account = state.accounts.find((item) => item.username === username && item.password === password);
-
-    if (!account) {
-        showToast("帳號或密碼錯誤");
-        return;
-    }
-    if (account.status !== "active") {
-        showToast("此帳號已停用");
-        return;
-    }
-
+    const account = state.accounts.find((a) => a.username === username && a.password === password);
+    if (!account) { showToast("帳號或密碼錯誤"); return; }
+    if (account.status !== "active") { showToast("此帳號已停用"); return; }
     state.currentAccount = account;
     state.role = account.role;
     state.demoMode = false;
     saveState();
-    updateUserDisplay();
-    applyRolePermissions();
-    showToast(`登入成功：${account.name}`);
-    goToRoleHome();
+    window.location.href = ROLE_PAGES[account.role] || "index.html";
 }
 
 function demoLogin(role) {
-    if (!roleHomeSection[role]) return;
+    if (!ROLE_PAGES[role]) return;
     state.currentAccount = null;
     state.role = role;
     state.demoMode = true;
     saveState();
-    updateUserDisplay();
-    applyRolePermissions();
-    showToast(`${ROLES[role]} Demo 模式`);
-    goToRoleHome();
+    window.location.href = ROLE_PAGES[role];
 }
 
 function logoutAccount() {
@@ -369,158 +224,100 @@ function logoutAccount() {
     state.demoMode = false;
     state.role = "guest";
     saveState();
-    applyRolePermissions();
-    showToast("已登出");
-    showSection("account-login-section");
+    window.location.href = "index.html";
 }
 
-function applyRolePermissions() {
-    const role = getCurrentRole();
-    document.querySelectorAll(".content-section").forEach((section) => {
-        const allowed = rolePermissions[role]?.includes(section.id);
-        section.dataset.allowed = allowed ? "true" : "false";
-    });
-    updateSidebar();
-    updateUserDisplay();
-    if (!rolePermissions[role]?.includes(currentSection)) {
-        currentSection = role === "guest" ? "account-login-section" : roleHomeSection[role];
-    }
-}
+// ─── Navigation ───────────────────────────────────────────────────────
 
 function showSection(sectionId) {
+    const target = document.getElementById(sectionId);
+    if (!target) return;
     currentSection = sectionId;
-    document.querySelectorAll(".content-section").forEach((section) => {
-        section.classList.remove("active");
+    document.querySelectorAll(".content-section").forEach((s) => s.classList.remove("active"));
+    target.classList.add("active");
+    document.querySelectorAll("[data-section]").forEach((btn) => {
+        const active = btn.dataset.section === sectionId;
+        btn.classList.toggle("active", active);
+        btn.closest(".nav-dropdown-wrap")?.classList.toggle("has-active", active);
     });
-
-    const section = document.getElementById(sectionId);
-    if (section) section.classList.add("active");
-
-    document.querySelectorAll(".nav-item").forEach((item) => {
-        item.classList.remove("active");
-        if (item.getAttribute("data-target") === sectionId) {
-            item.classList.add("active");
-        }
-    });
-
-    updateBreadcrumb(sectionId);
     updateDocumentTitle(sectionId);
-    closeSidebar();
+    closeNavMenu();
     if (sectionId === "health-input-section") syncHealthHeightInput(true);
     renderAll();
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function navigateTo(sectionId) {
-    const allowed = rolePermissions[getCurrentRole()] || rolePermissions.guest;
-
-    if (!allowed.includes(sectionId)) {
-        showToast("您目前的角色沒有權限使用此功能。");
-        return;
-    }
-
+    if (!document.getElementById(sectionId)) { showToast("此功能不在目前頁面"); return; }
     showSection(sectionId);
 }
 
-function startExperience() {
-    if (!isLoggedIn()) {
-        showSection("account-login-section");
-        return;
-    }
-    goToRoleHome();
+function getSectionLabel(id) { return SECTION_LABELS[id] || "AI Health Platform"; }
+
+function updateDocumentTitle(sectionId) {
+    const label = getSectionLabel(sectionId);
+    document.title = `${label} | AI Health Platform`;
 }
 
-function goHealthInputFromHome() {
-    if (getCurrentRole() !== "user") {
-        showToast("此功能僅一般使用者可使用");
-        return;
-    }
-    navigateTo("health-input-section");
-}
+// ─── Navbar ───────────────────────────────────────────────────────────
 
-function viewFHIRDemo() {
-    const role = getCurrentRole();
-    if (role === "user") {
-        navigateTo("fhir-viewer-section");
-        return;
-    }
-    if (role === "admin") {
-        navigateTo("fhir-record-section");
-        return;
-    }
-    showToast("您目前的角色沒有權限使用此功能。");
-}
-
-function showAIShowcase() {
-    const target = {
-        user: "ai-health-section",
-        coach: "training-advice-section",
-        nutritionist: "diet-advice-section",
-        admin: "admin-dashboard-section"
-    }[getCurrentRole()];
-    if (!target) {
-        showSection("account-login-section");
-        return;
-    }
-    navigateTo(target);
-}
-
-function scrollToHomeFlow() {
-    showSection("home-section");
-    setTimeout(() => {
-        document.getElementById("home-flow-section")?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 50);
-}
-
-function goToRoleHome() {
-    const target = roleHomeSection[state.role] || "user-dashboard-section";
-    showSection(target);
-}
-
-function updateUserDisplay() {
+function updateNavbar() {
     const account = currentAccount();
     const role = getCurrentRole();
-    setText("account-name", account ? account.name : (state.demoMode ? `${ROLES[role]} Demo` : "尚未登入"));
-    setText("account-role", ROLES[role] || "Guest");
-    setText("account-mode", state.demoMode ? "Demo 模式" : (account ? "正式帳號" : ""));
-    setText("account-avatar", account ? account.name.slice(0, 1).toUpperCase() : (state.demoMode ? ROLES[role].slice(0, 1) : "G"));
+    const name = account ? account.name : (state.demoMode ? `${ROLES[role]} Demo` : "尚未登入");
+    setText("nav-user-name", name.slice(0, 6));
+    setText("nav-avatar", name.slice(0, 1).toUpperCase());
+    setText("nav-role-label", ROLES[role] || "Guest");
+    setText("nav-full-name", name);
+    updateNotifBadge();
+    document.querySelectorAll("[data-section]").forEach((btn) => {
+        const active = btn.dataset.section === currentSection;
+        btn.classList.toggle("active", active);
+        btn.closest(".nav-dropdown-wrap")?.classList.toggle("has-active", active);
+    });
 }
 
-function updateSidebar() {
-    const role = getCurrentRole();
-    const items = NAV_ITEMS[role] || NAV_ITEMS.guest;
+function toggleNavMenu() {
+    document.getElementById("nav-menu")?.classList.toggle("open");
+}
+
+function closeNavMenu() {
+    document.getElementById("nav-menu")?.classList.remove("open");
+    document.querySelectorAll(".nav-dropdown-wrap.open").forEach((w) => w.classList.remove("open"));
+}
+
+function toggleDropdown(el) {
+    const wrap = el.closest(".nav-dropdown-wrap");
+    if (!wrap) return;
+    const wasOpen = wrap.classList.contains("open");
+    document.querySelectorAll(".nav-dropdown-wrap.open").forEach((w) => w.classList.remove("open"));
+    if (!wasOpen) wrap.classList.add("open");
+}
+
+function toggleUserMenu() {
+    const wrap = document.getElementById("nav-user-wrap");
+    wrap?.classList.toggle("open");
+}
+
+function updateNotifBadge() {
     const account = currentAccount();
-    const notifCount = state.notifications.filter(
+    const count = state.notifications.filter(
         (item) => item.accountId === "all" || item.accountId === account?.id
     ).length;
-
-    setHTML("sidebar-nav", items.map(([id, label]) => {
-        const badge = label.includes("通知") && notifCount > 0
-            ? `<span class="nav-badge">${notifCount}</span>`
-            : "";
-        return `
-            <button class="nav-item ${id === currentSection ? "active" : ""}" data-target="${id}" onclick="navigateTo('${id}')">
-                <span class="nav-icon">${navIcon(label)}</span>
-                <span class="nav-label">${label}</span>
-                ${badge}
-            </button>
-        `;
-    }).join(""));
-
-    const loggedIn = isLoggedIn();
-    const logoutButton = document.getElementById("logout-button");
-    const resetButton = document.getElementById("reset-button");
-    if (logoutButton) logoutButton.style.display = loggedIn ? "inline-flex" : "none";
-    if (resetButton) resetButton.style.display = role === "admin" ? "inline-flex" : "none";
-
-    updateNotifBadge();
+    ["nav-notif-count", "nav-notif-count-icon"].forEach((id) => {
+        const badge = document.getElementById(id);
+        if (!badge) return;
+        badge.textContent = count > 0 ? String(count) : "";
+        badge.classList.toggle("hidden", count === 0);
+    });
 }
+
+// ─── Render All ───────────────────────────────────────────────────────
 
 function renderAll() {
     ensureProfileUI();
     initCustomSelects();
-    updateSidebar();
-    updateUserDisplay();
+    updateNavbar();
     renderHomeStats();
     renderProfileSection();
     renderUserDashboard();
@@ -536,12 +333,16 @@ function renderAll() {
     renderRegistrations();
     renderNotifications();
     renderCharts();
+    renderAdminCharts();
+    renderCoachCharts();
+    renderNutritionCharts();
+    renderUserDashboardCharts();
 }
 
 function ensureProfileUI() {
     if (getCurrentRole() !== "user") return;
-    const main = document.querySelector(".main-content, .page-content, main") || document.body;
-    if (!document.getElementById("profile-section")) {
+    const pageContent = document.querySelector(".page-content");
+    if (pageContent && !document.getElementById("profile-section")) {
         const section = document.createElement("section");
         section.id = "profile-section";
         section.className = "content-section";
@@ -550,17 +351,42 @@ function ensureProfileUI() {
             <div class="card form-card profile-card">
                 <form onsubmit="submitProfileSettings(event)">
                     <div class="form-row-2">
-                        <div class="form-group"><label for="profile-name">姓名</label><input id="profile-name" type="text" required /></div>
-                        <div class="form-group"><label for="profile-gender">性別</label><select id="profile-gender" required><option value="male">男</option><option value="female">女</option><option value="other">其他</option></select></div>
+                        <div class="form-group">
+                            <label for="profile-name">姓名</label>
+                            <input id="profile-name" type="text" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="profile-gender">性別</label>
+                            <select id="profile-gender" required>
+                                <option value="male">男</option>
+                                <option value="female">女</option>
+                                <option value="other">其他</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-row-3">
-                        <div class="form-group"><label for="profile-birthday">生日</label><input id="profile-birthday" type="date" required /></div>
-                        <div class="form-group"><label for="profile-height">身高 cm</label><input id="profile-height" type="number" min="80" max="230" step="0.1" required /></div>
-                        <div class="form-group"><label for="profile-target-weight">目標體重 kg</label><input id="profile-target-weight" type="number" min="30" max="250" step="0.1" required /></div>
+                        <div class="form-group">
+                            <label for="profile-birthday">生日</label>
+                            <input id="profile-birthday" type="date" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="profile-height">身高 cm</label>
+                            <input id="profile-height" type="number" min="80" max="230" step="0.1" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="profile-target-weight">目標體重 kg</label>
+                            <input id="profile-target-weight" type="number" min="30" max="250" step="0.1" required />
+                        </div>
                     </div>
                     <div class="form-row-2">
-                        <div class="form-group"><label for="profile-daily-step-goal">每日步數目標</label><input id="profile-daily-step-goal" type="number" min="0" max="100000" step="100" required /></div>
-                        <div class="form-group"><label for="profile-weekly-exercise-goal">每週運動目標分鐘數</label><input id="profile-weekly-exercise-goal" type="number" min="0" max="2000" step="5" required /></div>
+                        <div class="form-group">
+                            <label for="profile-daily-step-goal">每日步數目標</label>
+                            <input id="profile-daily-step-goal" type="number" min="0" max="100000" step="100" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="profile-weekly-exercise-goal">每週運動目標分鐘數</label>
+                            <input id="profile-weekly-exercise-goal" type="number" min="0" max="2000" step="5" required />
+                        </div>
                     </div>
                     <p class="profile-help">BMI 計算主要使用此處的身高設定；單筆健康資料若有身高，會優先使用該筆資料。</p>
                     <button type="submit" class="primary-button">儲存個人資料</button>
@@ -568,7 +394,18 @@ function ensureProfileUI() {
             </div>
         `;
         const healthInput = document.getElementById("health-input-section");
-        main.insertBefore(section, healthInput || main.firstChild);
+        pageContent.insertBefore(section, healthInput || pageContent.firstChild);
+    }
+    const navMenu = document.getElementById("nav-menu");
+    if (navMenu && !navMenu.querySelector('[data-section="profile-section"]')) {
+        const button = document.createElement("button");
+        button.className = "nav-btn";
+        button.dataset.section = "profile-section";
+        button.type = "button";
+        button.textContent = "個人資料設定";
+        button.onclick = () => showSection("profile-section");
+        const dashboardButton = navMenu.querySelector('[data-section="user-dashboard-section"]');
+        dashboardButton?.insertAdjacentElement("afterend", button);
     }
     const heightInput = document.getElementById("health-height");
     if (heightInput) {
@@ -581,13 +418,14 @@ function ensureProfileUI() {
 function renderProfileSection() {
     if (!document.getElementById("profile-section")) return;
     const account = currentAccount();
-    setInputValue("profile-name", state.patient.name || account?.name || "");
-    setInputValue("profile-gender", state.patient.gender || "male");
-    setInputValue("profile-birthday", state.patient.birthday || "1990-01-01");
-    setInputValue("profile-height", state.patient.height || 175);
-    setInputValue("profile-target-weight", state.patient.targetWeight || 68);
-    setInputValue("profile-daily-step-goal", state.patient.dailyStepGoal || 10000);
-    setInputValue("profile-weekly-exercise-goal", state.patient.weeklyExerciseGoal || 150);
+    const patient = state.patient;
+    setInputValue("profile-name", patient.name || account?.name || "");
+    setInputValue("profile-gender", patient.gender || "male");
+    setInputValue("profile-birthday", patient.birthday || "1990-01-01");
+    setInputValue("profile-height", patient.height || 175);
+    setInputValue("profile-target-weight", patient.targetWeight || 68);
+    setInputValue("profile-daily-step-goal", patient.dailyStepGoal || 10000);
+    setInputValue("profile-weekly-exercise-goal", patient.weeklyExerciseGoal || 150);
 }
 
 function submitProfileSettings(event) {
@@ -609,19 +447,25 @@ function submitProfileSettings(event) {
         weeklyExerciseGoal: Number(valueOf("profile-weekly-exercise-goal")),
         heightUpdatedAt: height !== oldHeight ? nowText() : (state.patient.heightUpdatedAt || nowText())
     };
+    const account = currentAccount();
+    if (account?.role === "user") {
+        account.name = state.patient.name;
+        state.currentAccount = { ...state.currentAccount, name: state.patient.name };
+    }
     state.healthRecords = state.healthRecords.map((record) => record.height ? record : {
         ...record,
         bmi: calculateBMI(record.weight, state.patient.height)
     });
+    syncHealthHeightInput(true);
     saveState();
     showToast("個人資料設定已儲存");
-    syncHealthHeightInput(true);
     renderAll();
 }
 
 function syncHealthHeightInput(force = false) {
     const input = document.getElementById("health-height");
-    if (input && (force || !input.value)) input.value = getUserHeight();
+    if (!input) return;
+    if (force || !input.value) input.value = getUserHeight();
 }
 
 function initCustomSelects() {
@@ -729,28 +573,21 @@ function renderUserDashboard() {
     setHTML("user-notification-summary", notificationList(3));
 }
 
-function renderCoachDashboard() {
-    updateCoachDashboard();
-}
-
-function renderNutritionDashboard() {
-    updateNutritionDashboard();
-}
+function renderCoachDashboard() { updateCoachDashboard(); }
+function renderNutritionDashboard() { updateNutritionDashboard(); }
 
 function renderAdminDashboard() {
     setHTML("admin-dashboard-cards", [
         kpi("使用者總數", state.accounts.length, "帳號"),
-        kpi("FHIR Resource 數量", state.healthRecords.length * 7, "筆"),
-        kpi("Observation 數量", state.healthRecords.length * 7, "筆"),
-        kpi("授權紀錄數", state.authorizations.length, "筆"),
-        kpi("區塊鏈紀錄數", state.blockchainLogs.length, "筆"),
+        kpi("FHIR Resources", state.healthRecords.length * 7, "筆"),
+        kpi("Observation", state.healthRecords.length * 7, "筆"),
+        kpi("授權紀錄", state.authorizations.length, "筆"),
+        kpi("區塊鏈紀錄", state.blockchainLogs.length, "筆"),
         kpi("報名總數", state.registrations.length, "筆"),
-        kpi("待審核報名", state.registrations.filter((item) => item.status === "待審核").length, "筆"),
-        kpi("系統通知數", state.notifications.length, "則")
+        kpi("待審核報名", state.registrations.filter((i) => i.status === "待審核").length, "筆"),
+        kpi("系統通知", state.notifications.length, "則")
     ].join(""));
-    setHTML("admin-system-summary", `
-        <p>目前系統保留 localStorage Demo 資料，包含 FHIR、Observation、授權、區塊鏈紀錄、通知中心與競賽報名審核資料。</p>
-    `);
+    setHTML("admin-system-summary", `<p>系統保留 localStorage Demo 資料，包含 FHIR、授權、區塊鏈紀錄、通知與競賽報名審核。</p>`);
 }
 
 function renderFHIRViewer() {
@@ -767,11 +604,7 @@ function renderAIHealth() {
     setHTML("ai-health-panel", `
         <div class="ai-panel">
             <div class="score-ring" style="--score-pct:${scoreNum};--score-color:${scoreColor}">
-                <div>
-                    <span>健康分數</span>
-                    <strong>${escapeHTML(String(analysis.score))}</strong>
-                    <small>${escapeHTML(analysis.risk)}</small>
-                </div>
+                <div><span>健康分數</span><strong>${escapeHTML(String(analysis.score))}</strong><small>${escapeHTML(analysis.risk)}</small></div>
             </div>
             <div class="advice-list">
                 <div class="advice-item bmi-source-item">
@@ -791,7 +624,7 @@ function renderAIHealth() {
 
 function renderTables() {
     const accountId = activeUserId();
-    const registration = state.registrations.filter((item) => item.accountId === accountId).slice(-1)[0];
+    const registration = state.registrations.filter((i) => i.accountId === accountId).slice(-1)[0];
     setHTML("my-registration-body", renderMyRegistrationPage(registration));
 }
 
@@ -820,7 +653,10 @@ function renderMyRegistrationPage(item) {
                 <p>追蹤報名進度、檢查作品連結狀態，並管理送審資料。</p>
             </div>
             <div class="registration-status-card">
-                <div><span>報名狀態</span>${registrationBadge(item.status)}</div>
+                <div>
+                    <span>報名狀態</span>
+                    ${registrationBadge(item.status)}
+                </div>
                 <div><span>報名編號</span><strong>${escapeHTML(item.id)}</strong></div>
                 <div><span>隊伍名稱</span><strong>${escapeHTML(item.teamName)}</strong></div>
                 <div><span>作品名稱</span><strong>${escapeHTML(item.projectName)}</strong></div>
@@ -860,10 +696,16 @@ function registrationProgress(item) {
         ["大會審核", submitted],
         ["審核結果", reviewed]
     ];
-    return `<div class="registration-progress">${steps.map(([label, done], index) => `
-        <div class="registration-step ${done ? "done" : ""} ${(!done && steps.slice(0, index).every(([, ok]) => ok)) ? "active" : ""}">
-            <span>${done ? "✓" : index + 1}</span><strong>${label}</strong>
-        </div>`).join("")}</div>`;
+    return `
+        <div class="registration-progress">
+            ${steps.map(([label, done], index) => `
+                <div class="registration-step ${done ? "done" : ""} ${(!done && steps.slice(0, index).every(([, ok]) => ok)) ? "active" : ""}">
+                    <span>${done ? "✓" : index + 1}</span>
+                    <strong>${label}</strong>
+                </div>
+            `).join("")}
+        </div>
+    `;
 }
 
 function registrationSummaryItem(label, value) {
@@ -878,56 +720,54 @@ function renderCoachViews() {
         const analysis = runAIAnalysis(authPatientId(auth));
         return `<div class="card auth-data-card"><h3>${escapeHTML(auth.patientName || patientName(auth))}</h3><p>${escapeHTML(analysis.exerciseAdvice)}</p></div>`;
     }).join("") || `<div class="card empty">尚未取得學員授權資料。</div>`);
-    setHTML("training-record-list", state.trainingRecords.map((item) => `<div class="record-card"><strong>${escapeHTML(item.studentName)}：${escapeHTML(item.title)}</strong><p>${escapeHTML(item.content)}</p><small class="muted">${item.createdAt}</small></div>`).join(""));
+    setHTML("training-record-list", state.trainingRecords.map((i) => `<div class="record-card"><strong>${escapeHTML(i.studentName)}：${escapeHTML(i.title)}</strong><p>${escapeHTML(i.content)}</p><small class="muted">${i.createdAt}</small></div>`).join(""));
 }
 
 function renderNutritionViews() {
     renderAuthorizedCases();
     renderCaseNutritionData();
-    setHTML("nutrition-record-list", state.nutritionRecords.map((item) => `<div class="record-card"><strong>${escapeHTML(item.caseName)}：${escapeHTML(item.title)}</strong><p>${escapeHTML(item.content)}</p><small class="muted">${item.createdAt}</small></div>`).join(""));
+    setHTML("nutrition-record-list", state.nutritionRecords.map((i) => `<div class="record-card"><strong>${escapeHTML(i.caseName)}：${escapeHTML(i.title)}</strong><p>${escapeHTML(i.content)}</p><small class="muted">${i.createdAt}</small></div>`).join(""));
 }
 
 function renderAdminViews() {
-    setHTML("account-management-body", state.accounts.map((account) => `
-        <tr>
-            <td>${escapeHTML(account.name)}</td><td>${escapeHTML(account.username)}</td><td>${escapeHTML(account.email)}</td><td>${ROLES[account.role]}</td><td>${statusPill(account.status === "active" ? "啟用" : "停用", account.status === "active" ? "active" : "disabled")}</td>
-            <td><button class="mini-button" onclick="toggleAccount('${account.id}')">${account.status === "active" ? "停用" : "啟用"}</button></td>
-        </tr>
+    setHTML("account-management-body", state.accounts.map((a) => `
+        <tr><td>${escapeHTML(a.name)}</td><td>${escapeHTML(a.username)}</td><td>${escapeHTML(a.email)}</td><td>${ROLES[a.role]}</td><td>${statusPill(a.status === "active" ? "啟用" : "停用", a.status === "active" ? "active" : "disabled")}</td>
+        <td><button class="mini-button" onclick="toggleAccount('${a.id}')">${a.status === "active" ? "停用" : "啟用"}</button></td></tr>
     `).join(""));
-    setHTML("user-management-body", state.accounts.map((account) => `<tr><td>${escapeHTML(account.name)}</td><td>${escapeHTML(account.email)}</td><td>${ROLES[account.role]}</td><td>${escapeHTML(account.organization)}</td><td>${escapeHTML(account.phone)}</td></tr>`).join(""));
-    setHTML("fhir-record-list", state.accounts.filter((account) => account.role === "user").map((account) => `<div class="card"><h3>${escapeHTML(account.name)}</h3><pre class="code-block">${escapeHTML(JSON.stringify(generateFHIRBundle(account.id), null, 2))}</pre></div>`).join(""));
-    setHTML("observation-record-panel", `<div class="kpi-grid">${kpi("健康紀錄", state.healthRecords.length, "筆")}${kpi("Observation", state.healthRecords.length * 7, "筆")}${kpi("使用者", state.accounts.filter((item) => item.role === "user").length, "人")}</div>`);
+    setHTML("user-management-body", state.accounts.map((a) => `<tr><td>${escapeHTML(a.name)}</td><td>${escapeHTML(a.email)}</td><td>${ROLES[a.role]}</td><td>${escapeHTML(a.organization)}</td><td>${escapeHTML(a.phone)}</td></tr>`).join(""));
+    setHTML("fhir-record-list", state.accounts.filter((a) => a.role === "user").map((a) => `<div class="card"><h3>${escapeHTML(a.name)}</h3><pre class="code-block">${escapeHTML(JSON.stringify(generateFHIRBundle(a.id), null, 2))}</pre></div>`).join(""));
+    setHTML("observation-record-panel", `<div class="kpi-grid">${kpi("健康紀錄", state.healthRecords.length, "筆")}${kpi("Observation", state.healthRecords.length * 7, "筆")}${kpi("使用者", state.accounts.filter((a) => a.role === "user").length, "人")}</div>`);
     setHTML("authorization-record-body", state.authorizations.map((auth) => {
-        const normalized = normalizeAuthorization(auth);
-        return `<tr><td>${escapeHTML(normalized.patientName)}</td><td>${escapeHTML(normalized.targetName || ROLES[normalized.targetRole] || normalized.targetRole)}</td><td>${scopeBadges(normalized.dataScopes)}</td><td><code>${escapeHTML(normalized.hash)}</code><br>${authorizationStatusBadge(normalized)}</td><td>${normalized.createdAt}</td></tr>`;
+        const n = normalizeAuthorization(auth);
+        return `<tr><td>${escapeHTML(n.patientName)}</td><td>${escapeHTML(n.targetName || ROLES[n.targetRole] || n.targetRole)}</td><td>${scopeBadges(n.dataScopes)}</td><td><code>${escapeHTML(n.hash)}</code><br>${authorizationStatusBadge(n)}</td><td>${n.createdAt}</td></tr>`;
     }).join("") || emptyRow(5));
     setHTML("blockchain-body", state.blockchainLogs.map((log) => `<tr><td><code>${escapeHTML(log.hash)}</code></td><td>${escapeHTML(log.source)}</td><td>${escapeHTML(log.event)}</td><td>${log.createdAt}</td></tr>`).join("") || emptyRow(4));
 }
 
 function renderRegistrations() {
-    setHTML("registration-list-body", state.registrations.map((item) => `
+    setHTML("registration-list-body", state.registrations.map((i) => `
         <tr>
-            <td><code>${escapeHTML(item.id)}</code></td>
-            <td>${escapeHTML(item.teamName)}</td>
-            <td>${escapeHTML(item.projectName)}</td>
-            <td>${escapeHTML(item.category)}</td>
-            <td>${escapeHTML(item.leaderName)}</td>
-            <td>${escapeHTML(item.email)}</td>
-            <td>${registrationBadge(item.status)}</td>
-            <td><button type="button" class="mini-button registration-mini-button" onclick="showRegistrationDetail('${item.id}')">詳情</button></td>
+            <td><code>${escapeHTML(i.id)}</code></td>
+            <td>${escapeHTML(i.teamName)}</td>
+            <td>${escapeHTML(i.projectName)}</td>
+            <td>${escapeHTML(i.category)}</td>
+            <td>${escapeHTML(i.leaderName)}</td>
+            <td>${escapeHTML(i.email)}</td>
+            <td>${registrationBadge(i.status)}</td>
+            <td><button type="button" class="mini-button registration-mini-button" onclick="showRegistrationDetail('${i.id}')">詳情</button></td>
         </tr>
     `).join("") || `<tr><td colspan="8"><div class="registration-empty"><strong>尚無報名資料</strong><p>使用者送出競賽報名後，資料會顯示在這裡。</p></div></td></tr>`);
-    setHTML("registration-review-panel", state.registrations.map((item) => `
+    setHTML("registration-review-panel", state.registrations.map((i) => `
         <div class="card registration-review-card">
             <div>
-                <h3>${escapeHTML(item.projectName)}</h3>
-                <p>團隊：${escapeHTML(item.teamName)}｜負責人：${escapeHTML(item.leaderName)}</p>
+                <h3>${escapeHTML(i.projectName)}</h3>
+                <p>團隊：${escapeHTML(i.teamName)} ｜ 負責人：${escapeHTML(i.leaderName)}</p>
             </div>
-            ${registrationBadge(item.status)}
+            ${registrationBadge(i.status)}
             <div class="dashboard-actions">
-                <button class="primary-button" onclick="updateRegistrationStatus('${item.id}', '審核通過')">審核通過</button>
-                <button class="secondary-button" onclick="updateRegistrationStatus('${item.id}', '需補件')">需補件</button>
-                <button class="danger-button" onclick="updateRegistrationStatus('${item.id}', '退件')">退件</button>
+                <button class="primary-button" onclick="updateRegistrationStatus('${i.id}', '審核通過')">審核通過</button>
+                <button class="secondary-button" onclick="updateRegistrationStatus('${i.id}', '需補件')">需補件</button>
+                <button class="danger-button" onclick="updateRegistrationStatus('${i.id}', '退件')">退件</button>
             </div>
         </div>
     `).join("") || `<div class="card empty">目前沒有報名資料。</div>`);
@@ -945,7 +785,10 @@ function showRegistrationDetail(id) {
     ensureRegistrationModal();
     setHTML("registration-modal-content", `
         <div class="registration-modal-header">
-            <div><span>報名詳情</span><h3>${escapeHTML(item.projectName)}</h3></div>
+            <div>
+                <span>報名詳情</span>
+                <h3>${escapeHTML(item.projectName)}</h3>
+            </div>
             ${registrationBadge(item.status)}
             <button type="button" class="modal-close-button" onclick="closeRegistrationModal()">×</button>
         </div>
@@ -1024,11 +867,170 @@ function editRegistration(id) {
 
 function renderNotifications() {
     const account = currentAccount();
-    const notifications = state.notifications.filter((item) => item.accountId === "all" || item.accountId === account?.id || getCurrentRole() === "admin");
-    const html = notifications.map((item) => `<div class="timeline-item"><strong>${escapeHTML(item.title)}</strong><p>${escapeHTML(item.message)}</p><small class="muted">${item.createdAt}</small></div>`).join("") || `<div class="card empty">目前沒有通知。</div>`;
+    const notifications = state.notifications.filter((i) => i.accountId === "all" || i.accountId === account?.id || getCurrentRole() === "admin");
+    const html = notifications.map((i) => `<div class="timeline-item"><strong>${escapeHTML(i.title)}</strong><p>${escapeHTML(i.message)}</p><small class="muted">${i.createdAt}</small></div>`).join("") || `<div class="card empty">目前沒有通知。</div>`;
     setHTML("notification-list", html);
     setHTML("system-notification-list", html);
 }
+
+// ─── Chart.js helpers ─────────────────────────────────────────────────
+
+function chartjsReady() { return typeof Chart !== "undefined"; }
+
+function destroyChart(id) {
+    if (_charts[id]) { _charts[id].destroy(); delete _charts[id]; }
+}
+
+function createDoughnutChart(canvasId, { labels, data, colors }) {
+    if (!chartjsReady()) return;
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    destroyChart(canvasId);
+    _charts[canvasId] = new Chart(canvas, {
+        type: "doughnut",
+        data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 2, borderColor: "#fff", hoverOffset: 6 }] },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: "62%",
+            plugins: { legend: { position: "bottom", labels: { padding: 12, font: { size: 12, weight: "600", family: "Inter, sans-serif" }, usePointStyle: true } } }
+        }
+    });
+}
+
+function createBarChartJS(canvasId, { labels, datasets, yLabel = "", horizontal = false }) {
+    if (!chartjsReady()) return;
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    destroyChart(canvasId);
+    _charts[canvasId] = new Chart(canvas, {
+        type: "bar",
+        data: {
+            labels,
+            datasets: datasets.map((d) => ({
+                label: d.label,
+                data: d.data,
+                backgroundColor: Array.isArray(d.colors) ? d.colors : (d.color + "cc"),
+                borderColor: Array.isArray(d.colors) ? d.colors : d.color,
+                borderWidth: 1,
+                borderRadius: 5,
+                borderSkipped: false
+            }))
+        },
+        options: {
+            indexAxis: horizontal ? "y" : "x",
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: datasets.length > 1 } },
+            scales: {
+                y: { beginAtZero: true, grid: { color: "#f1f5f9" }, ticks: { font: { size: 11 } }, title: yLabel ? { display: true, text: yLabel, font: { size: 11 } } : undefined },
+                x: { grid: { display: false }, ticks: { font: { size: 11 } } }
+            }
+        }
+    });
+}
+
+function createLineChartJS(canvasId, { labels, datasets }) {
+    if (!chartjsReady()) return;
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    destroyChart(canvasId);
+    _charts[canvasId] = new Chart(canvas, {
+        type: "line",
+        data: {
+            labels,
+            datasets: datasets.map((d) => ({
+                label: d.label,
+                data: d.data,
+                borderColor: d.color,
+                backgroundColor: d.color + "18",
+                tension: 0.35,
+                fill: d.fill !== false,
+                borderWidth: 2,
+                pointRadius: 3,
+                pointHoverRadius: 5
+            }))
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: "top", labels: { font: { size: 11 }, usePointStyle: true } } },
+            scales: {
+                y: { grid: { color: "#f1f5f9" }, ticks: { font: { size: 11 } } },
+                x: { grid: { display: false }, ticks: { font: { size: 11 } } }
+            }
+        }
+    });
+}
+
+// ─── Chart.js render functions ────────────────────────────────────────
+
+function renderAdminCharts() {
+    if (!chartjsReady()) return;
+    const roleCounts = ["user", "coach", "nutritionist", "admin"].map((r) => state.accounts.filter((a) => a.role === r).length);
+    createDoughnutChart("chart-admin-roles", { labels: ["一般使用者", "健身教練", "營養師", "系統管理員"], data: roleCounts, colors: ["#0f766e", "#2563eb", "#db2777", "#f59e0b"] });
+
+    const regBuckets = { "待審核": 0, "審核通過": 0, "需補件": 0, "退件": 0 };
+    state.registrations.forEach((r) => { if (r.status in regBuckets) regBuckets[r.status]++; });
+    createDoughnutChart("chart-admin-reg", { labels: Object.keys(regBuckets), data: Object.values(regBuckets), colors: ["#f59e0b", "#16a34a", "#2563eb", "#dc2626"] });
+
+    const userCount = state.accounts.filter((a) => a.role === "user").length;
+    createBarChartJS("chart-admin-fhir", {
+        labels: ["Patient", "Observation", "Practitioner", "Bundle"],
+        datasets: [{ label: "資源數量", data: [userCount, state.healthRecords.length * 7, 1, userCount], colors: ["#0f766e", "#2563eb", "#db2777", "#f59e0b"] }]
+    });
+
+    const validAuth = state.authorizations.filter(isAuthorizationValid).length;
+    createDoughnutChart("chart-admin-auth", { labels: ["有效授權", "已過期"], data: [validAuth || 0, (state.authorizations.length - validAuth) || 0], colors: ["#16a34a", "#94a3b8"] });
+}
+
+function renderCoachCharts() {
+    if (!chartjsReady()) return;
+    const auths = getAuthorizationsByRole("coach").filter(isAuthorizationValid).filter(hasCoachDataScope);
+    if (!auths.length) return;
+    const labels = auths.map((a) => String(a.patientName || patientName(a)).replace(/[<>"&]/g, ""));
+    const achievements = auths.map((a) => {
+        const weekly = runAIAnalysis(authPatientId(a)).weeklyExercise;
+        return Math.min(100, Math.round((weekly / 150) * 100));
+    });
+    createBarChartJS("chart-coach-achievement", {
+        labels,
+        datasets: [{ label: "運動達成率 (%)", data: achievements, color: "#0f766e", colors: achievements.map((v) => v >= 100 ? "#16a34a" : v >= 50 ? "#f59e0b" : "#dc2626") }],
+        yLabel: "%"
+    });
+}
+
+function renderNutritionCharts() {
+    if (!chartjsReady()) return;
+    const auths = getAuthorizationsByRole("nutritionist").filter(isAuthorizationValid).filter(hasNutritionDataScope);
+    if (!auths.length) return;
+    const records = unique(auths.map(authPatientId)).map((id) => latestRecord(id)).filter(Boolean);
+    const bmiCats = { 過輕: 0, 正常: 0, 過重: 0, 肥胖: 0 };
+    records.forEach((r) => { const cat = bmiCategory(r.bmi); if (cat in bmiCats) bmiCats[cat]++; });
+    createDoughnutChart("chart-nutrition-bmi", { labels: Object.keys(bmiCats), data: Object.values(bmiCats), colors: ["#60a5fa", "#16a34a", "#f59e0b", "#dc2626"] });
+    const normal = records.filter((r) => r.systolic < 130 && r.diastolic < 80).length;
+    createDoughnutChart("chart-nutrition-bp", { labels: ["血壓正常", "血壓偏高"], data: [normal, records.length - normal], colors: ["#16a34a", "#dc2626"] });
+}
+
+function renderUserDashboardCharts() {
+    if (!chartjsReady()) return;
+    const records = recordsByAccount(activeUserId()).slice(-7);
+    if (!records.length) return;
+    const labels = records.map((r) => r.date.slice(5));
+    createLineChartJS("chart-user-bp", {
+        labels,
+        datasets: [
+            { label: "收縮壓", data: records.map((r) => r.systolic), color: "#dc2626", fill: false },
+            { label: "舒張壓", data: records.map((r) => r.diastolic), color: "#2563eb", fill: false }
+        ]
+    });
+    createBarChartJS("chart-user-steps", {
+        labels,
+        datasets: [{ label: "步數", data: records.map((r) => r.steps), color: "#0f766e", colors: records.map((r) => r.steps >= 10000 ? "#16a34a" : r.steps >= 6000 ? "#f59e0b" : "#dc2626") }]
+    });
+}
+
+// ─── Health Data ──────────────────────────────────────────────────────
 
 function submitHealthData(event) {
     event.preventDefault();
@@ -1051,8 +1053,7 @@ function submitHealthData(event) {
         date: valueOf("health-date"),
         systolic: Number(valueOf("health-systolic")),
         diastolic: Number(valueOf("health-diastolic")),
-        weight,
-        height,
+        weight, height,
         heartRate: Number(valueOf("health-heart-rate")),
         steps: Number(valueOf("health-steps")),
         exercise: Number(valueOf("health-exercise")),
@@ -1070,25 +1071,16 @@ function submitRegistration(event) {
     const editingId = state.editingRegistrationId;
     const existing = editingId ? state.registrations.find((item) => item.id === editingId) : null;
     const registration = {
-        id: existing?.id || nextRegistrationId(),
-        accountId: existing?.accountId || activeUserId(),
-        teamName: valueOf("reg-team-name"),
-        projectName: valueOf("reg-project-name"),
-        category: valueOf("reg-category"),
-        leaderName: valueOf("reg-leader-name"),
-        email: valueOf("reg-email"),
-        phone: valueOf("reg-phone"),
+        id: existing?.id || nextRegistrationId(), accountId: existing?.accountId || activeUserId(),
+        teamName: valueOf("reg-team-name"), projectName: valueOf("reg-project-name"),
+        category: valueOf("reg-category"), leaderName: valueOf("reg-leader-name"),
+        email: valueOf("reg-email"), phone: valueOf("reg-phone"),
         organization: valueOf("reg-organization"),
         members: [valueOf("reg-member-1"), valueOf("reg-member-2"), valueOf("reg-member-3")].filter(Boolean),
-        description: valueOf("reg-description"),
-        roles: valueOf("reg-roles"),
-        fhirResources: valueOf("reg-fhir-resources"),
-        githubUrl: valueOf("reg-github-url"),
-        demoUrl: valueOf("reg-demo-url"),
-        note: valueOf("reg-note"),
-        status: existing?.status || "待審核",
-        reviewComment: existing?.reviewComment || "",
-        createdAt: existing?.createdAt || nowText()
+        description: valueOf("reg-description"), roles: valueOf("reg-roles"),
+        fhirResources: valueOf("reg-fhir-resources"), githubUrl: valueOf("reg-github-url"),
+        demoUrl: valueOf("reg-demo-url"), note: valueOf("reg-note"),
+        status: existing?.status || "待審核", reviewComment: existing?.reviewComment || "", createdAt: existing?.createdAt || nowText()
     };
     if (existing) {
         Object.assign(existing, registration, { updatedAt: nowText() });
@@ -1109,8 +1101,7 @@ function generateQRCode(event) {
     event.preventDefault();
     const auth = createAuthorization();
     if (!auth) return;
-    const qrToken = `${auth.id}|${auth.hash}`;
-    drawQRCode(qrToken);
+    drawQRCode(`${auth.id}|${auth.hash}`);
     setText("qr-target", ROLES[auth.targetRole] || auth.targetRole);
     setText("qr-scope", auth.dataScopes.join("、"));
     setText("qr-expire", auth.expiredAt);
@@ -1121,38 +1112,21 @@ function generateQRCode(event) {
 
 function createAuthorization() {
     const targetRole = valueOf("share-target-role");
-    const dataScopes = Array.from(document.querySelectorAll('input[name="share-data-scope"]:checked')).map((input) => input.value);
+    const dataScopes = Array.from(document.querySelectorAll('input[name="share-data-scope"]:checked')).map((i) => i.value);
     const duration = valueOf("share-duration") || "7天";
-    const patient = currentAccount()?.role === "user" ? currentAccount() : state.accounts.find((account) => account.id === activeUserId());
-    const target = state.accounts.find((account) => account.role === targetRole);
-
-    if (!targetRole) {
-        showToast("請選擇授權對象");
-        return null;
-    }
-    if (dataScopes.length === 0) {
-        showToast("請至少勾選一項授權資料範圍");
-        return null;
-    }
-
+    const patient = currentAccount()?.role === "user" ? currentAccount() : state.accounts.find((a) => a.id === activeUserId());
+    const target = state.accounts.find((a) => a.role === targetRole);
+    if (!targetRole) { showToast("請選擇授權對象"); return null; }
+    if (!dataScopes.length) { showToast("請至少勾選一項授權資料範圍"); return null; }
     const createdAt = nowText();
     const expiredAt = authorizationExpiredAt(duration);
     const token = `${patient?.id || activeUserId()}-${targetRole}-${dataScopes.join(",")}-${createdAt}`;
     const hash = `0x${hashText(token).toUpperCase()}`;
     const auth = {
-        id: nextAuthorizationId(),
-        patientId: patient?.id || activeUserId(),
-        patientName: patient?.name || "王小明",
-        targetRole,
-        targetName: target?.name || (targetRole === "coach" ? "Coach Mike" : ROLES[targetRole] || targetRole),
-        dataScopes,
-        duration,
-        status: "有效",
-        hash,
-        createdAt,
-        expiredAt
+        id: nextAuthorizationId(), patientId: patient?.id || activeUserId(), patientName: patient?.name || "王小明",
+        targetRole, targetName: target?.name || (targetRole === "coach" ? "李教練" : ROLES[targetRole] || targetRole),
+        dataScopes, duration, status: "有效", hash, createdAt, expiredAt
     };
-
     state.authorizations.push(auth);
     addBlockchainLog(auth.patientName, `授權 ${auth.targetName} 查看 ${auth.dataScopes.join("、")}`, hash);
     addNotification(auth.patientId, "授權分享已建立", `已授權 ${auth.targetName} 查看 ${auth.dataScopes.join("、")}，期限：${auth.duration}。`);
@@ -1160,6 +1134,8 @@ function createAuthorization() {
     saveState();
     return auth;
 }
+
+// ─── Authorized views ─────────────────────────────────────────────────
 
 function renderAuthorizedStudents() {
     const auths = getAuthorizationsByRole("coach");
@@ -1172,8 +1148,7 @@ function renderAuthorizedStudents() {
                 <td>${escapeHTML(auth.duration || "--")}<br><small class="muted">${escapeHTML(auth.expiredAt || "--")}</small></td>
                 <td>${authorizationStatusBadge(auth)}</td>
                 <td><button class="mini-button" ${valid && hasCoachDataScope(auth) ? "" : "disabled"} onclick="showSection('student-exercise-section')">查看運動資料</button></td>
-            </tr>
-        `;
+            </tr>`;
     }).join("") || emptyRow(5));
 }
 
@@ -1196,8 +1171,7 @@ function renderStudentExerciseData() {
                     ${authAllows(auth, "運動紀錄") ? authMetric("運動達成率", `${achievement}%`, "每週 150 分鐘") : ""}
                 </div>
                 <div class="advice-item"><strong>AI 訓練建議</strong><p>${escapeHTML(analysis.exerciseAdvice)}</p></div>
-            </div>
-        `;
+            </div>`;
     }).join("") || `<div class="card empty">尚未取得學員授權資料。</div>`);
 }
 
@@ -1212,17 +1186,15 @@ function renderAuthorizedCases() {
                 <td>${escapeHTML(auth.duration || "--")}<br><small class="muted">${escapeHTML(auth.expiredAt || "--")}</small></td>
                 <td>${authorizationStatusBadge(auth)}</td>
                 <td><button class="mini-button" ${valid && hasNutritionDataScope(auth) ? "" : "disabled"} onclick="showSection('bmi-analysis-section')">查看營養資料</button></td>
-            </tr>
-        `;
+            </tr>`;
     }).join("") || emptyRow(5));
 }
 
 function renderCaseNutritionData() {
     const auths = getAuthorizationsByRole("nutritionist").filter(isAuthorizationValid).filter(hasNutritionDataScope);
-    const nutritionHtml = auths.map((auth) => {
-        const patientId = authPatientId(auth);
-        const latest = latestRecord(patientId);
-        const analysis = runAIAnalysis(patientId);
+    const html = auths.map((auth) => {
+        const latest = latestRecord(authPatientId(auth));
+        const analysis = runAIAnalysis(authPatientId(auth));
         if (!latest) return `<div class="card empty">尚未取得個案授權資料。</div>`;
         const bpHigh = latest.systolic >= 130 || latest.diastolic >= 80;
         const bmiRisk = latest.bmi >= 27 || latest.bmi < 18.5 ? "高" : latest.bmi >= 24 || bpHigh ? "中" : "低";
@@ -1233,107 +1205,95 @@ function renderCaseNutritionData() {
                     ${authAllows(auth, "體重") ? authMetric("體重", `${latest.weight ?? "--"}`, "kg") : ""}
                     ${authAllows(auth, "BMI") ? authMetric("BMI", `${latest.bmi ?? "--"}`, bmiCategory(latest.bmi)) : ""}
                     ${authAllows(auth, "血壓") ? authMetric("血壓", `${latest.systolic}/${latest.diastolic}`, bpHigh ? "偏高" : "正常") : ""}
-                    ${authMetric("營養風險等級", bmiRisk, "依 BMI 與血壓")}
+                    ${authMetric("營養風險", bmiRisk, "依 BMI 與血壓")}
                 </div>
                 <div class="advice-item"><strong>AI 飲食建議</strong><p>${escapeHTML(analysis.dietAdvice)}</p></div>
-            </div>
-        `;
+            </div>`;
     }).join("") || `<div class="card empty">尚未取得個案授權資料。</div>`;
-
-    setHTML("bmi-analysis-panel", nutritionHtml);
-    setHTML("diet-advice-panel", nutritionHtml);
-    setHTML("blood-pressure-panel", nutritionHtml);
+    setHTML("bmi-analysis-panel", html);
+    setHTML("diet-advice-panel", html);
+    setHTML("blood-pressure-panel", html);
 }
+
+// ─── Auth helpers ─────────────────────────────────────────────────────
 
 function isAuthorizationValid(auth) {
     if (!auth || auth.status !== "有效") return false;
-    const expiredAt = auth.expiredAt || auth.expiresAt;
-    if (!expiredAt || expiredAt === "永久授權") return true;
-    return new Date(expiredAt.replace(" ", "T")).getTime() >= Date.now();
+    const exp = auth.expiredAt || auth.expiresAt;
+    if (!exp || exp === "永久授權") return true;
+    return new Date(exp.replace(" ", "T")).getTime() >= Date.now();
 }
 
 function getAuthorizationsByRole(role) {
     return state.authorizations
-        .filter((auth) => auth.targetRole === role)
+        .filter((a) => a.targetRole === role)
         .map(normalizeAuthorization)
         .sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
 }
 
 function updateCoachDashboard() {
     const auths = getAuthorizationsByRole("coach");
-    const validAuths = auths.filter(isAuthorizationValid).filter(hasCoachDataScope);
-    const patientIds = unique(validAuths.map(authPatientId));
-    const records = patientIds.map((id) => latestRecord(id)).filter(Boolean);
-    const activeToday = records.filter((record) => Number(record.steps) >= 6000).length;
-    const abnormal = records.filter((record) => Number(record.heartRate) > 100).length;
-    const averageAchievement = patientIds.length
-        ? Math.round(patientIds.reduce((sum, id) => sum + Math.min(100, (runAIAnalysis(id).weeklyExercise / 150) * 100), 0) / patientIds.length)
-        : 0;
+    const valid = auths.filter(isAuthorizationValid).filter(hasCoachDataScope);
+    const ids = unique(valid.map(authPatientId));
+    const records = ids.map((id) => latestRecord(id)).filter(Boolean);
+    const activeToday = records.filter((r) => Number(r.steps) >= 6000).length;
+    const abnormal = records.filter((r) => Number(r.heartRate) > 100).length;
+    const avg = ids.length ? Math.round(ids.reduce((s, id) => s + Math.min(100, (runAIAnalysis(id).weeklyExercise / 150) * 100), 0) / ids.length) : 0;
     setHTML("coach-dashboard-cards", [
         kpi("被授權學員數", unique(auths.map(authPatientId)).length, "人"),
-        kpi("有效授權數", validAuths.length, "筆"),
+        kpi("有效授權數", valid.length, "筆"),
         kpi("今日活躍學員", activeToday, "人"),
         kpi("心率異常提醒", abnormal, "筆"),
-        kpi("平均運動達成率", `${averageAchievement}%`, "每週 150 分鐘")
+        kpi("平均運動達成率", `${avg}%`, "每週 150 分鐘")
     ].join(""));
-    setHTML("coach-trend-summary", `<p>${validAuths.length ? `目前有 ${validAuths.length} 筆有效運動授權，平均運動達成率 ${averageAchievement}%。` : "尚未取得學員授權資料。"}</p>`);
-    setHTML("coach-ai-summary", `<p>${validAuths.length ? "建議優先追蹤心率偏高、步數偏低或運動達成率不足的學員。" : "取得運動紀錄、心率或步數授權後，將顯示 AI 訓練建議。"}</p>`);
+    setHTML("coach-trend-summary", `<p>${valid.length ? `目前 ${valid.length} 筆有效授權，平均達成率 ${avg}%。` : "尚未取得學員授權資料。"}</p>`);
+    setHTML("coach-ai-summary", `<p>${valid.length ? "建議優先追蹤心率偏高或運動達成率不足的學員。" : "取得運動紀錄、心率或步數授權後，將顯示 AI 訓練建議。"}</p>`);
 }
 
 function updateNutritionDashboard() {
     const auths = getAuthorizationsByRole("nutritionist");
-    const validAuths = auths.filter(isAuthorizationValid).filter(hasNutritionDataScope);
-    const patientIds = unique(validAuths.map(authPatientId));
-    const records = patientIds.map((id) => latestRecord(id)).filter(Boolean);
-    const bmiAbnormal = records.filter((record) => record.bmi >= 24 || record.bmi < 18.5).length;
-    const bpHigh = records.filter((record) => record.systolic >= 130 || record.diastolic >= 80).length;
+    const valid = auths.filter(isAuthorizationValid).filter(hasNutritionDataScope);
+    const ids = unique(valid.map(authPatientId));
+    const records = ids.map((id) => latestRecord(id)).filter(Boolean);
+    const bmiAbnormal = records.filter((r) => r.bmi >= 24 || r.bmi < 18.5).length;
+    const bpHigh = records.filter((r) => r.systolic >= 130 || r.diastolic >= 80).length;
     setHTML("nutrition-dashboard-cards", [
         kpi("被授權個案數", unique(auths.map(authPatientId)).length, "人"),
-        kpi("有效授權數", validAuths.length, "筆"),
+        kpi("有效授權數", valid.length, "筆"),
         kpi("BMI 異常個案", bmiAbnormal, "人"),
         kpi("血壓偏高個案", bpHigh, "人"),
-        kpi("AI 飲食建議數", validAuths.length, "則")
+        kpi("AI 飲食建議數", valid.length, "則")
     ].join(""));
-    setHTML("nutrition-risk-summary", `<p>${validAuths.length ? `目前 ${patientIds.length} 位有效授權個案中，${bmiAbnormal} 位 BMI 異常，${bpHigh} 位血壓偏高。` : "尚未取得個案授權資料。"}</p>`);
-    setHTML("nutrition-ai-summary", `<p>${validAuths.length ? "建議針對 BMI 異常或血壓偏高個案，降低鈉攝取並追蹤體重與 BMI 變化。" : "取得 BMI、體重或血壓授權後，將顯示 AI 飲食建議。"}</p>`);
+    setHTML("nutrition-risk-summary", `<p>${valid.length ? `${ids.length} 位有效個案中，${bmiAbnormal} 位 BMI 異常，${bpHigh} 位血壓偏高。` : "尚未取得個案授權資料。"}</p>`);
+    setHTML("nutrition-ai-summary", `<p>${valid.length ? "建議針對 BMI 異常或血壓偏高個案，降低鈉攝取並追蹤體重與 BMI 變化。" : "取得 BMI、體重或血壓授權後，將顯示 AI 飲食建議。"}</p>`);
 }
 
 function addTrainingRecord(event) {
     event.preventDefault();
     state.trainingRecords.unshift({ id: uid("TR"), coachId: currentAccount()?.id || "DEMO-COACH", studentName: valueOf("training-student"), title: valueOf("training-title"), content: valueOf("training-content"), createdAt: nowText() });
-    saveState();
-    event.target.reset();
-    showToast("訓練紀錄已新增");
-    renderAll();
+    saveState(); event.target.reset(); showToast("訓練紀錄已新增"); renderAll();
 }
 
 function addNutritionRecord(event) {
     event.preventDefault();
     state.nutritionRecords.unshift({ id: uid("NR"), nutritionistId: currentAccount()?.id || "DEMO-NUTRITION", caseName: valueOf("nutrition-case"), title: valueOf("nutrition-title"), content: valueOf("nutrition-content"), createdAt: nowText() });
-    saveState();
-    event.target.reset();
-    showToast("營養紀錄已新增");
-    renderAll();
+    saveState(); event.target.reset(); showToast("營養紀錄已新增"); renderAll();
 }
 
 function updateRegistrationStatus(id, status) {
-    const item = state.registrations.find((registration) => registration.id === id);
+    const item = state.registrations.find((r) => r.id === id);
     if (!item) return;
     item.status = status;
     item.reviewComment = status === "審核通過" ? "資料完整，審核通過。" : status === "需補件" ? "請補充作品 Demo 或 FHIR 說明。" : "未符合本次徵件條件。";
     addNotification(item.accountId, "報名審核狀態更新", `${item.id}：${status}`);
-    saveState();
-    showToast("審核狀態已更新");
-    renderAll();
+    saveState(); showToast("審核狀態已更新"); renderAll();
 }
 
 function toggleAccount(id) {
-    const account = state.accounts.find((item) => item.id === id);
+    const account = state.accounts.find((a) => a.id === id);
     if (!account) return;
     account.status = account.status === "active" ? "disabled" : "active";
-    saveState();
-    showToast("帳號狀態已更新");
-    renderAll();
+    saveState(); showToast("帳號狀態已更新"); renderAll();
 }
 
 function resetDemoData() {
@@ -1342,14 +1302,14 @@ function resetDemoData() {
     state = loadState();
     initDefaultAccounts();
     saveState();
-    currentSection = "account-login-section";
-    applyRolePermissions();
-    showSection("account-login-section");
     showToast("Demo 資料已重置");
+    window.location.href = "index.html";
 }
 
+// ─── FHIR ─────────────────────────────────────────────────────────────
+
 function generateFHIRBundle(accountId = activeUserId()) {
-    const account = state.accounts.find((item) => item.id === accountId) || state.accounts.find((item) => item.role === "user");
+    const account = state.accounts.find((a) => a.id === accountId) || state.accounts.find((a) => a.role === "user");
     const latest = latestRecord(account?.id);
     if (!account || !latest) return { resourceType: "Bundle", type: "collection", entry: [] };
     const observations = [
@@ -1362,9 +1322,7 @@ function generateFHIRBundle(accountId = activeUserId()) {
         observation("Exercise", "55411-3", latest.exercise, "min", latest.date, account.id)
     ];
     return {
-        resourceType: "Bundle",
-        type: "collection",
-        timestamp: new Date().toISOString(),
+        resourceType: "Bundle", type: "collection", timestamp: new Date().toISOString(),
         entry: [
             { resource: { resourceType: "Patient", id: account.id, name: [{ text: account.name }], telecom: [{ system: "email", value: account.email }, { system: "phone", value: account.phone }], managingOrganization: { display: account.organization } } },
             { resource: { resourceType: "Practitioner", id: "practitioner-demo-001", name: [{ text: "AI Health Platform" }] } },
@@ -1374,31 +1332,16 @@ function generateFHIRBundle(accountId = activeUserId()) {
 }
 
 function observation(display, code, value, unit, date, accountId) {
-    return {
-        resourceType: "Observation",
-        status: "final",
-        code: { coding: [{ system: "http://loinc.org", code, display }] },
-        subject: { reference: `Patient/${accountId}` },
-        effectiveDateTime: date,
-        valueQuantity: { value, unit }
-    };
+    return { resourceType: "Observation", status: "final", code: { coding: [{ system: "http://loinc.org", code, display }] }, subject: { reference: `Patient/${accountId}` }, effectiveDateTime: date, valueQuantity: { value, unit } };
 }
+
+// ─── AI Analysis ──────────────────────────────────────────────────────
 
 function runAIAnalysis(accountId = activeUserId()) {
     const records = recordsByAccount(accountId);
     const latest = records[records.length - 1];
-    const weeklyExercise = records.slice(-7).reduce((sum, item) => sum + Number(item.exercise || 0), 0);
-    if (!latest) {
-        return {
-            score: "--",
-            risk: "無資料",
-            weeklyExercise: 0,
-            healthAdvice: "請先新增健康資料，系統會依血壓、BMI、心率與運動量提供建議。",
-            dietAdvice: "尚無飲食建議。",
-            exerciseAdvice: "尚無訓練建議。",
-            medicalAdvice: "尚無追蹤提醒。"
-        };
-    }
+    const weeklyExercise = records.slice(-7).reduce((s, r) => s + Number(r.exercise || 0), 0);
+    if (!latest) return { score: "--", risk: "無資料", weeklyExercise: 0, healthAdvice: "請先新增健康資料，系統會依血壓、BMI、心率與運動量提供建議。", dietAdvice: "尚無飲食建議。", exerciseAdvice: "尚無訓練建議。", medicalAdvice: "尚無追蹤提醒。" };
     let score = 92;
     if (latest.systolic >= 130 || latest.diastolic >= 80) score -= 12;
     if (latest.bmi >= 24 || latest.bmi < 18.5) score -= 10;
@@ -1407,9 +1350,7 @@ function runAIAnalysis(accountId = activeUserId()) {
     score = Math.max(55, score);
     const risk = score >= 85 ? "低風險" : score >= 70 ? "需追蹤" : "高風險";
     return {
-        score,
-        risk,
-        weeklyExercise,
+        score, risk, weeklyExercise,
         healthAdvice: latest.systolic >= 130 || latest.diastolic >= 80 ? "血壓偏高，建議減少鈉攝取、規律量測並留意睡眠壓力。" : "血壓落在可接受範圍，請維持規律量測。",
         dietAdvice: latest.bmi >= 24 ? "BMI 偏高，建議提高蔬菜、蛋白質與全穀比例，減少含糖飲料與宵夜。" : "目前 BMI 狀態尚可，維持均衡飲食與足量飲水。",
         exerciseAdvice: weeklyExercise < 150 ? "本週運動量不足，建議每週累積至少 150 分鐘中等強度有氧。" : "本週運動量達標，可加入肌力訓練提升代謝與肌耐力。",
@@ -1417,11 +1358,11 @@ function runAIAnalysis(accountId = activeUserId()) {
     };
 }
 
+// ─── Canvas Charts (health-trend) ─────────────────────────────────────
+
 function setTrendRange(range) {
     trendRange = range;
-    document.querySelectorAll(".range-button").forEach((button) => {
-        button.classList.toggle("active", String(button.dataset.range) === String(range));
-    });
+    document.querySelectorAll(".range-button").forEach((btn) => btn.classList.toggle("active", String(btn.dataset.range) === String(range)));
     renderCharts();
 }
 
@@ -1442,7 +1383,6 @@ function renderCharts() {
         { label: "運動時間", value: (r) => r.exercise, unit: "分鐘", color: "#16a34a", status: exerciseStatus },
         { label: "熱量消耗", value: (r) => estimateCalories(r), unit: "kcal", color: "#db2777", status: () => "估算" }
     ]);
-
     const allRecords = recordsByAccount(activeUserId());
     drawLineChart("student-heart-chart", allRecords, [{ label: "心率", value: (r) => r.heartRate, unit: "bpm", color: "#db2777", status: heartRateStatus }]);
     drawLineChart("nutrition-weight-chart", allRecords, [{ label: "體重", value: (r) => r.weight, unit: "kg", color: "#0f766e", status: () => "趨勢追蹤" }]);
@@ -1457,45 +1397,32 @@ function drawLineChart(canvasId, records, seriesConfig) {
     ctx.clearRect(0, 0, width, height);
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, width, height);
-    if (!records.length) {
-        ctx.fillStyle = "#64748b";
-        ctx.fillText("尚無資料", 24, 32);
-        return;
-    }
+    if (!records.length) { ctx.fillStyle = "#64748b"; ctx.fillText("尚無資料", 24, 32); return; }
     const padding = 32;
-    const values = seriesConfig.flatMap((series) => records.map(series.value));
+    const values = seriesConfig.flatMap((s) => records.map(s.value));
     const min = Math.min(...values) * 0.95;
     const max = Math.max(...values) * 1.05;
     ctx.strokeStyle = "#dbe4ee";
-    for (let i = 0; i < 4; i += 1) {
+    for (let i = 0; i < 4; i++) {
         const y = padding + ((height - padding * 2) / 3) * i;
-        ctx.beginPath();
-        ctx.moveTo(padding, y);
-        ctx.lineTo(width - padding, y);
-        ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(padding, y); ctx.lineTo(width - padding, y); ctx.stroke();
     }
     chartPoints[canvasId] = [];
     seriesConfig.forEach((series) => {
-        ctx.strokeStyle = series.color;
-        ctx.lineWidth = 3;
-        ctx.beginPath();
-        records.forEach((record, i) => {
+        ctx.strokeStyle = series.color; ctx.lineWidth = 3; ctx.beginPath();
+        records.forEach((r, i) => {
             const x = padding + ((width - padding * 2) / Math.max(1, records.length - 1)) * i;
-            const value = series.value(record);
+            const value = series.value(r);
             const y = height - padding - ((value - min) / Math.max(1, max - min)) * (height - padding * 2);
-            if (i === 0) ctx.moveTo(x, y);
-            else ctx.lineTo(x, y);
-            chartPoints[canvasId].push({ x, y, date: record.date, label: series.label, value, unit: series.unit, status: series.status(value, record) });
+            if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+            chartPoints[canvasId].push({ x, y, date: r.date, label: series.label, value, unit: series.unit, status: series.status(value, r) });
         });
         ctx.stroke();
-        records.forEach((record, i) => {
+        records.forEach((r, i) => {
             const x = padding + ((width - padding * 2) / Math.max(1, records.length - 1)) * i;
-            const value = series.value(record);
+            const value = series.value(r);
             const y = height - padding - ((value - min) / Math.max(1, max - min)) * (height - padding * 2);
-            ctx.fillStyle = series.color;
-            ctx.beginPath();
-            ctx.arc(x, y, 4, 0, Math.PI * 2);
-            ctx.fill();
+            ctx.fillStyle = series.color; ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI * 2); ctx.fill();
         });
     });
     attachChartTooltip(canvas);
@@ -1507,26 +1434,19 @@ function drawBarChart(canvasId, records, config) {
     const ctx = canvas.getContext("2d");
     const width = canvas.width = canvas.clientWidth || 640;
     const height = canvas.height = Number(canvas.getAttribute("height")) || 220;
-    ctx.clearRect(0, 0, width, height);
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, width, height);
-    if (!records.length) {
-        ctx.fillStyle = "#64748b";
-        ctx.fillText("尚無資料", 24, 32);
-        return;
-    }
+    ctx.clearRect(0, 0, width, height); ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, width, height);
+    if (!records.length) { ctx.fillStyle = "#64748b"; ctx.fillText("尚無資料", 24, 32); return; }
     const padding = 32;
     const max = Math.max(...records.map(config.value)) * 1.1;
     const barWidth = Math.max(12, (width - padding * 2) / records.length * 0.58);
     chartPoints[canvasId] = [];
-    records.forEach((record, i) => {
-        const value = config.value(record);
+    records.forEach((r, i) => {
+        const value = config.value(r);
         const x = padding + ((width - padding * 2) / records.length) * i + barWidth * 0.35;
         const barHeight = ((height - padding * 2) * value) / Math.max(1, max);
         const y = height - padding - barHeight;
-        ctx.fillStyle = config.color;
-        ctx.fillRect(x, y, barWidth, barHeight);
-        chartPoints[canvasId].push({ x: x + barWidth / 2, y, date: record.date, label: config.label, value, unit: config.unit, status: config.status(value, record) });
+        ctx.fillStyle = config.color; ctx.fillRect(x, y, barWidth, barHeight);
+        chartPoints[canvasId].push({ x: x + barWidth / 2, y, date: r.date, label: config.label, value, unit: config.unit, status: config.status(value, r) });
     });
     attachChartTooltip(canvas);
 }
@@ -1536,28 +1456,25 @@ function drawRangeChart(canvasId, records) {
     if (!canvas) return;
     drawLineChart(canvasId, records, [{ label: "心率", value: (r) => r.heartRate, unit: "bpm", color: "#db2777", status: heartRateStatus }]);
     const ctx = canvas.getContext("2d");
-    const width = canvas.width;
-    ctx.fillStyle = "rgba(22, 163, 74, 0.1)";
-    ctx.fillRect(32, 72, width - 64, 78);
-    ctx.fillStyle = "#166534";
-    ctx.fillText("建議區間 60-100 bpm", 42, 92);
+    ctx.fillStyle = "rgba(22,163,74,0.1)";
+    ctx.fillRect(32, 72, canvas.width - 64, 78);
+    ctx.fillStyle = "#166534"; ctx.fillText("建議區間 60–100 bpm", 42, 92);
 }
 
 function renderTrendSummary(records) {
-    const avg = (getter) => records.length ? (records.reduce((sum, item) => sum + Number(getter(item) || 0), 0) / records.length) : 0;
-    const totalExercise = records.reduce((sum, item) => sum + Number(item.exercise || 0), 0);
+    const avg = (getter) => records.length ? records.reduce((s, r) => s + Number(getter(r) || 0), 0) / records.length : 0;
+    const total = records.reduce((s, r) => s + Number(r.exercise || 0), 0);
     setHTML("trend-summary-cards", [
         kpi("平均收縮壓", records.length ? avg((r) => r.systolic).toFixed(1) : "--", "mmHg"),
         kpi("平均舒張壓", records.length ? avg((r) => r.diastolic).toFixed(1) : "--", "mmHg"),
         kpi("平均心率", records.length ? avg((r) => r.heartRate).toFixed(1) : "--", "bpm"),
         kpi("平均 BMI", records.length ? avg((r) => r.bmi).toFixed(1) : "--", "kg/m2"),
         kpi("平均步數", records.length ? Math.round(avg((r) => r.steps)).toLocaleString() : "--", "steps"),
-        kpi("總運動時間", totalExercise, "分鐘")
+        kpi("總運動時間", total, "分鐘")
     ].join(""));
     const highBp = records.filter((r) => r.systolic >= 130 || r.diastolic >= 80).length;
-    const avgBmi = records.length ? avg((r) => r.bmi).toFixed(1) : "--";
     setText("trend-data-hint", records.length < 3 ? "目前資料較少，建議新增更多健康紀錄以獲得更準確趨勢。" : "");
-    setHTML("trend-ai-summary", `<h3>AI 趨勢摘要</h3><p>近 ${records.length} 筆資料中，血壓有 ${highBp} 次偏高，平均 BMI 為 ${avgBmi}，總運動時間 ${totalExercise} 分鐘，建議維持每週 150 分鐘運動。</p>`);
+    setHTML("trend-ai-summary", `<h3>AI 趨勢摘要</h3><p>近 ${records.length} 筆資料中，血壓有 ${highBp} 次偏高，平均 BMI 為 ${records.length ? avg((r) => r.bmi).toFixed(1) : "--"}，總運動 ${total} 分鐘，建議維持每週 150 分鐘。</p>`);
 }
 
 function filteredTrendRecords() {
@@ -1567,162 +1484,54 @@ function filteredTrendRecords() {
     const anchor = new Date(records[records.length - 1].date);
     const cutoff = new Date(anchor);
     cutoff.setDate(anchor.getDate() - Number(trendRange) + 1);
-    return records.filter((record) => new Date(record.date) >= cutoff);
+    return records.filter((r) => new Date(r.date) >= cutoff);
 }
 
 function attachChartTooltip(canvas) {
-    canvas.onmousemove = (event) => {
+    canvas.onmousemove = (e) => {
         const points = chartPoints[canvas.id] || [];
         if (!points.length) return;
         const rect = canvas.getBoundingClientRect();
-        const scaleX = canvas.width / rect.width;
-        const scaleY = canvas.height / rect.height;
-        const x = (event.clientX - rect.left) * scaleX;
-        const y = (event.clientY - rect.top) * scaleY;
-        const nearest = points.reduce((best, point) => {
-            const distance = Math.hypot(point.x - x, point.y - y);
-            return !best || distance < best.distance ? { ...point, distance } : best;
-        }, null);
-        if (!nearest || nearest.distance > 32) {
-            hideChartTooltip();
-            return;
-        }
-        showChartTooltip(event.clientX, event.clientY, nearest);
+        const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+        const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+        const nearest = points.reduce((best, p) => { const d = Math.hypot(p.x - x, p.y - y); return !best || d < best.distance ? { ...p, distance: d } : best; }, null);
+        if (!nearest || nearest.distance > 32) { hideChartTooltip(); return; }
+        showChartTooltip(e.clientX, e.clientY, nearest);
     };
     canvas.onmouseleave = hideChartTooltip;
 }
 
-function showChartTooltip(clientX, clientY, point) {
+function showChartTooltip(cx, cy, point) {
     const tooltip = document.getElementById("chart-tooltip");
     if (!tooltip) return;
-    tooltip.innerHTML = `
-        <strong>${escapeHTML(point.label)}</strong><br>
-        日期：${escapeHTML(point.date)}<br>
-        數值：${escapeHTML(point.value)} ${escapeHTML(point.unit)}<br>
-        狀態：${escapeHTML(point.status)}
-    `;
-    tooltip.style.left = `${clientX + 12}px`;
-    tooltip.style.top = `${clientY + 12}px`;
+    tooltip.innerHTML = `<strong>${escapeHTML(point.label)}</strong><br>日期：${escapeHTML(point.date)}<br>數值：${escapeHTML(point.value)} ${escapeHTML(point.unit)}<br>狀態：${escapeHTML(point.status)}`;
+    tooltip.style.left = `${cx + 12}px`; tooltip.style.top = `${cy + 12}px`;
     tooltip.classList.add("show");
 }
 
-function hideChartTooltip() {
-    document.getElementById("chart-tooltip")?.classList.remove("show");
-}
+function hideChartTooltip() { document.getElementById("chart-tooltip")?.classList.remove("show"); }
+
+// ─── Status helpers ───────────────────────────────────────────────────
 
 function bloodPressureStatus(value, record) {
-    const systolic = record?.systolic ?? value;
-    const diastolic = record?.diastolic ?? value;
-    return systolic >= 130 || diastolic >= 80 ? "偏高" : "正常";
+    const s = record?.systolic ?? value, d = record?.diastolic ?? value;
+    return s >= 130 || d >= 80 ? "偏高" : "正常";
 }
+function heartRateStatus(v) { return v < 60 ? "偏低" : v > 100 ? "偏高" : "正常"; }
+function stepsStatus(v) { return v >= 10000 ? "達標" : v >= 6000 ? "普通" : "偏少"; }
+function exerciseStatus(v) { return v >= 30 ? "達標" : "偏少"; }
+function estimateCalories(r) { return Math.round(Number(r.exercise || 0) * 6.5); }
 
-function heartRateStatus(value) {
-    if (value < 60) return "偏低";
-    if (value > 100) return "偏高";
-    return "正常";
-}
+// ─── Data helpers ─────────────────────────────────────────────────────
 
-function stepsStatus(value) {
-    if (value >= 10000) return "達標";
-    if (value >= 6000) return "普通";
-    return "偏少";
-}
-
-function exerciseStatus(value) {
-    if (value >= 30) return "達標";
-    return "偏少";
-}
-
-function estimateCalories(record) {
-    return Math.round(Number(record.exercise || 0) * 6.5);
-}
-
-function shareScopeLabel(scope) {
-    return {
-        exercise: "運動資料",
-        nutrition: "營養與體重資料",
-        summary: "健康摘要"
-    }[scope] || scope;
-}
-
-function authorizationExpiredAt(duration) {
-    if (duration === "永久授權") return "永久授權";
-    const date = new Date();
-    if (duration === "24小時") date.setHours(date.getHours() + 24);
-    if (duration === "7天") date.setDate(date.getDate() + 7);
-    if (duration === "30天") date.setDate(date.getDate() + 30);
-    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
-}
-
-function drawQRCode(token) {
-    const canvas = document.getElementById("qr-canvas");
-    if (!canvas) return;
-    canvas.width = 180;
-    canvas.height = 180;
-    canvas.style.width = "180px";
-    canvas.style.height = "180px";
-    const ctx = canvas.getContext("2d");
-    const size = 180;
-    const cells = 21;
-    const cell = size / cells;
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, size, size);
-    let seed = 0;
-    for (const char of token) seed = (seed + char.charCodeAt(0) * 17) % 9973;
-    for (let y = 0; y < cells; y += 1) {
-        for (let x = 0; x < cells; x += 1) {
-            const finder = (x < 7 && y < 7) || (x > 13 && y < 7) || (x < 7 && y > 13);
-            const on = finder ? (x === 0 || y === 0 || x === 6 || y === 6 || (x >= 2 && x <= 4 && y >= 2 && y <= 4)) : ((x * 31 + y * 17 + seed) % 5 < 2);
-            if (on) {
-                ctx.fillStyle = "#0f172a";
-                ctx.fillRect(Math.floor(x * cell), Math.floor(y * cell), Math.ceil(cell), Math.ceil(cell));
-            }
-        }
-    }
-}
-
-function recordsByAccount(accountId) {
-    return state.healthRecords.filter((record) => record.accountId === accountId).sort((a, b) => a.date.localeCompare(b.date));
-}
-
-function latestRecord(accountId = activeUserId()) {
-    const records = recordsByAccount(accountId);
-    return records[records.length - 1] || null;
-}
-
-function activeUserId() {
-    const account = currentAccount();
-    if (account?.role === "user") return account.id;
-    return "ACC-USER-DEMO";
-}
-
-function displayUserName() {
-    const account = currentAccount();
-    if (account) return account.name;
-    return state.demoMode ? `${ROLES[getCurrentRole()]} Demo` : "訪客";
-}
-
-function authorizedUsers(targetRole) {
-    const ids = getAuthorizationsByRole(targetRole).filter(isAuthorizationValid).map(authPatientId);
-    return state.accounts.filter((account) => ids.includes(account.id));
-}
-
-function latestAuthorization(userId, targetRole) {
-    return getAuthorizationsByRole(targetRole).filter((auth) => authPatientId(auth) === userId).slice(-1)[0];
-}
+function recordsByAccount(accountId) { return state.healthRecords.filter((r) => r.accountId === accountId).sort((a, b) => a.date.localeCompare(b.date)); }
+function latestRecord(accountId = activeUserId()) { const r = recordsByAccount(accountId); return r[r.length - 1] || null; }
+function activeUserId() { const a = currentAccount(); return a?.role === "user" ? a.id : "ACC-USER-DEMO"; }
+function authorizedUsers(targetRole) { return state.accounts.filter((a) => unique(getAuthorizationsByRole(targetRole).filter(isAuthorizationValid).map(authPatientId)).includes(a.id)); }
 
 function normalizeAuthorization(auth) {
     const patientId = auth.patientId || auth.userId || "ACC-USER-DEMO";
-    return {
-        ...auth,
-        patientId,
-        patientName: auth.patientName || patientName({ patientId }),
-        dataScopes: Array.isArray(auth.dataScopes) ? auth.dataScopes : legacyScopes(auth.scope),
-        duration: auth.duration || durationFromExpiredAt(auth.expiredAt || auth.expiresAt),
-        status: auth.status || "有效",
-        hash: auth.hash || auth.authHash || auth.token || "--",
-        expiredAt: auth.expiredAt || auth.expiresAt || "永久授權"
-    };
+    return { ...auth, patientId, patientName: auth.patientName || patientName({ patientId }), dataScopes: Array.isArray(auth.dataScopes) ? auth.dataScopes : legacyScopes(auth.scope), duration: auth.duration || durationFromExpiredAt(auth.expiredAt || auth.expiresAt), status: auth.status || "有效", hash: auth.hash || auth.authHash || auth.token || "--", expiredAt: auth.expiredAt || auth.expiresAt || "永久授權" };
 }
 
 function legacyScopes(scope) {
@@ -1732,213 +1541,82 @@ function legacyScopes(scope) {
     return scope ? [scope] : [];
 }
 
-function durationFromExpiredAt(expiredAt) {
-    if (!expiredAt || expiredAt === "永久授權") return "永久授權";
-    return "自訂期限";
+function durationFromExpiredAt(exp) { return (!exp || exp === "永久授權") ? "永久授權" : "自訂期限"; }
+function authPatientId(auth) { return auth.patientId || auth.userId || "ACC-USER-DEMO"; }
+function patientName(auth) { return state.accounts.find((a) => a.id === authPatientId(auth))?.name || auth.patientName || "王小明"; }
+function authAllows(auth, scope) { return Array.isArray(auth.dataScopes) && auth.dataScopes.includes(scope); }
+function hasCoachDataScope(auth) { return ["運動紀錄", "心率", "步數"].some((s) => authAllows(auth, s)); }
+function hasNutritionDataScope(auth) { return ["體重", "BMI", "血壓"].some((s) => authAllows(auth, s)); }
+
+// ─── Authorization ─────────────────────────────────────────────────────
+
+function authorizationExpiredAt(duration) {
+    if (duration === "永久授權") return "永久授權";
+    const d = new Date();
+    if (duration === "24小時") d.setHours(d.getHours() + 24);
+    if (duration === "7天") d.setDate(d.getDate() + 7);
+    if (duration === "30天") d.setDate(d.getDate() + 30);
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
-function authPatientId(auth) {
-    return auth.patientId || auth.userId || "ACC-USER-DEMO";
+function drawQRCode(token) {
+    const canvas = document.getElementById("qr-canvas");
+    if (!canvas) return;
+    canvas.width = 180; canvas.height = 180;
+    const ctx = canvas.getContext("2d");
+    const cells = 21, cell = 180 / cells;
+    ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, 180, 180);
+    let seed = 0;
+    for (const c of token) seed = (seed + c.charCodeAt(0) * 17) % 9973;
+    for (let y = 0; y < cells; y++) {
+        for (let x = 0; x < cells; x++) {
+            const finder = (x < 7 && y < 7) || (x > 13 && y < 7) || (x < 7 && y > 13);
+            const on = finder ? (x === 0 || y === 0 || x === 6 || y === 6 || (x >= 2 && x <= 4 && y >= 2 && y <= 4)) : ((x * 31 + y * 17 + seed) % 5 < 2);
+            if (on) { ctx.fillStyle = "#0f172a"; ctx.fillRect(Math.floor(x * cell), Math.floor(y * cell), Math.ceil(cell), Math.ceil(cell)); }
+        }
+    }
 }
 
-function patientName(auth) {
-    return state.accounts.find((account) => account.id === authPatientId(auth))?.name || auth.patientName || "王小明";
-}
+// ─── Utility ──────────────────────────────────────────────────────────
 
-function authAllows(auth, scope) {
-    return Array.isArray(auth.dataScopes) && auth.dataScopes.includes(scope);
-}
-
-function hasCoachDataScope(auth) {
-    return ["運動紀錄", "心率", "步數"].some((scope) => authAllows(auth, scope));
-}
-
-function hasNutritionDataScope(auth) {
-    return ["體重", "BMI", "血壓"].some((scope) => authAllows(auth, scope));
-}
-
-function scopeBadges(scopes) {
-    return (scopes || []).map((scope) => `<span class="scope-badge">${escapeHTML(scope)}</span>`).join("") || `<span class="muted">未指定</span>`;
-}
-
-function authorizationStatusBadge(auth) {
-    const valid = isAuthorizationValid(auth);
-    return `<span class="auth-badge ${valid ? "valid" : "expired"}">${valid ? "有效" : "已過期"}</span>`;
-}
-
-function authMetric(label, value, unit) {
-    return `<div class="auth-metric"><span>${escapeHTML(label)}</span><strong>${escapeHTML(value)}</strong><small>${escapeHTML(unit || "")}</small></div>`;
-}
-
-function unique(items) {
-    return Array.from(new Set(items.filter(Boolean)));
-}
-
-function nextAuthorizationId() {
-    const date = new Date();
-    const ymd = `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}`;
-    const count = state.authorizations.filter((item) => String(item.id).includes(`AUTH-${ymd}`)).length + 1;
-    return `AUTH-${ymd}-${String(count).padStart(3, "0")}`;
-}
-
+function unique(items) { return Array.from(new Set(items.filter(Boolean))); }
 function getUserHeight() {
     return state.patient.height || 175;
 }
-
 function calculateBMI(weight, heightCm = getUserHeight()) {
     const heightM = heightCm / 100;
     return (weight / (heightM * heightM)).toFixed(1);
 }
-
 function isValidHeight(height) {
     return Number.isFinite(Number(height)) && Number(height) >= 80 && Number(height) <= 230;
 }
-
-function bmiCategory(bmi) {
-    if (bmi < 18.5) return "過輕";
-    if (bmi < 24) return "正常";
-    if (bmi < 27) return "過重";
-    return "肥胖";
-}
-
-function copyFHIR() {
-    const text = document.getElementById("fhir-json-output")?.textContent || "";
-    if (navigator.clipboard) navigator.clipboard.writeText(text);
-    showToast("FHIR JSON 已複製");
-}
-
-function addBlockchainLog(source, event, token) {
-    state.blockchainLogs.unshift({ id: uid("BC"), hash: `0x${hashText(`${source}-${event}-${token}`).toUpperCase()}`, source, event, createdAt: nowText() });
-}
-
-function addNotification(accountId, title, message) {
-    state.notifications.unshift({ id: uid("NT"), accountId, title, message, createdAt: nowText() });
-}
-
-function nextAccountId() {
-    const date = new Date();
-    const ymd = `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}`;
-    const count = state.accounts.filter((account) => account.id.includes(`ACC-${ymd}`)).length + 1;
-    return `ACC-${ymd}-${String(count).padStart(3, "0")}`;
-}
-
-function nextRegistrationId() {
-    const date = new Date();
-    const ymd = `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}`;
-    const count = state.registrations.filter((item) => item.id.includes(`REG-${ymd}`)).length + 1;
-    return `REG-${ymd}-${String(count).padStart(3, "0")}`;
-}
-
-function uid(prefix) {
-    return `${prefix}-${Date.now()}-${Math.random().toString(16).slice(2, 7)}`;
-}
-
-function nowText() {
-    const date = new Date();
-    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
-}
-
-function futureDateText(days) {
-    const date = new Date();
-    date.setDate(date.getDate() + Number(days));
-    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} 23:59`;
-}
-
-function pad(value) {
-    return String(value).padStart(2, "0");
-}
-
-function hashText(text) {
-    let hash = 2166136261;
-    for (let i = 0; i < text.length; i += 1) {
-        hash ^= text.charCodeAt(i);
-        hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
-    }
-    return (hash >>> 0).toString(16).padStart(8, "0") + Math.random().toString(16).slice(2, 8);
-}
-
-function valueOf(id) {
-    return document.getElementById(id)?.value.trim() || "";
-}
-
+function bmiCategory(bmi) { return bmi < 18.5 ? "過輕" : bmi < 24 ? "正常" : bmi < 27 ? "過重" : "肥胖"; }
+function copyFHIR() { const t = document.getElementById("fhir-json-output")?.textContent || ""; if (navigator.clipboard) navigator.clipboard.writeText(t); showToast("FHIR JSON 已複製"); }
+function addBlockchainLog(source, event, token) { state.blockchainLogs.unshift({ id: uid("BC"), hash: `0x${hashText(`${source}-${event}-${token}`).toUpperCase()}`, source, event, createdAt: nowText() }); }
+function addNotification(accountId, title, message) { state.notifications.unshift({ id: uid("NT"), accountId, title, message, createdAt: nowText() }); }
+function nextAccountId() { const d = new Date(), ymd = `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}`; return `ACC-${ymd}-${String(state.accounts.filter((a) => a.id.includes(`ACC-${ymd}`)).length + 1).padStart(3, "0")}`; }
+function nextRegistrationId() { const d = new Date(), ymd = `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}`; return `REG-${ymd}-${String(state.registrations.filter((r) => r.id.includes(`REG-${ymd}`)).length + 1).padStart(3, "0")}`; }
+function nextAuthorizationId() { const d = new Date(), ymd = `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}`; return `AUTH-${ymd}-${String(state.authorizations.filter((a) => String(a.id).includes(`AUTH-${ymd}`)).length + 1).padStart(3, "0")}`; }
+function uid(prefix) { return `${prefix}-${Date.now()}-${Math.random().toString(16).slice(2, 7)}`; }
+function nowText() { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`; }
+function pad(v) { return String(v).padStart(2, "0"); }
+function hashText(text) { let h = 2166136261; for (let i = 0; i < text.length; i++) { h ^= text.charCodeAt(i); h += (h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24); } return (h >>> 0).toString(16).padStart(8, "0") + Math.random().toString(16).slice(2, 8); }
+function valueOf(id) { return document.getElementById(id)?.value.trim() || ""; }
 function setInputValue(id, value) {
     const el = document.getElementById(id);
     if (el && document.activeElement !== el) el.value = value ?? "";
 }
-
-function kpi(title, value, caption) {
-    return `
-        <div class="kpi-card">
-            <div class="kpi-card-icon">${escapeHTML(kpiIcon(title))}</div>
-            <span>${escapeHTML(title)}</span>
-            <strong>${escapeHTML(value)}</strong>
-            <small>${escapeHTML(caption || "")}</small>
-        </div>
-    `;
-}
-
-function kpiIcon(title) {
-    if (title.includes("血壓")) return "BP";
-    if (title.includes("心率")) return "HR";
-    if (title.includes("體重")) return "KG";
-    if (title.includes("BMI")) return "BMI";
-    if (title.includes("步數")) return "步";
-    if (title.includes("運動")) return "動";
-    if (title.includes("學員")) return "員";
-    if (title.includes("個案")) return "案";
-    if (title.includes("FHIR")) return "{}";
-    if (title.includes("Observation")) return "OB";
-    if (title.includes("授權")) return "QR";
-    if (title.includes("區塊鏈")) return "BC";
-    if (title.includes("報名")) return "報";
-    if (title.includes("通知")) return "訊";
-    return title.slice(0, 1);
-}
-
-function statusPill(label, className) {
-    const cls = className || ({ "待審核": "pending", "審核通過": "approved", "需補件": "revision", "退件": "rejected" }[label] || "pending");
-    return `<span class="status ${cls}">${escapeHTML(label)}</span>`;
-}
-
-function emptyRow(cols) {
-    return `<tr><td colspan="${cols}" class="empty">目前沒有資料</td></tr>`;
-}
-
-function notificationList(limit) {
-    const account = currentAccount();
-    const items = state.notifications.filter((item) => item.accountId === "all" || item.accountId === account?.id).slice(0, limit);
-    return items.map((item) => `<p><strong>${escapeHTML(item.title)}</strong><br><span class="muted">${escapeHTML(item.message)}</span></p>`).join("") || `<p class="muted">目前沒有通知。</p>`;
-}
-
-function navIcon(label) {
-    if (label.includes("首頁")) return "H";
-    if (label.includes("FHIR")) return "{}";
-    if (label.includes("AI")) return "AI";
-    if (label.includes("登入")) return "IN";
-    if (label.includes("註冊")) return "+";
-    if (label.includes("管理")) return "M";
-    if (label.includes("通知")) return "N";
-    return label.slice(0, 1);
-}
-
-function escapeHTML(value) {
-    return String(value ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-}
-
-function setHTML(id, html) {
-    const element = document.getElementById(id);
-    if (element) element.innerHTML = html;
-}
-
-function setText(id, text) {
-    const element = document.getElementById(id);
-    if (element) element.textContent = text;
-}
+function escapeHTML(value) { return String(value ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;"); }
+function setHTML(id, html) { const el = document.getElementById(id); if (el) el.innerHTML = html; }
+function setText(id, text) { const el = document.getElementById(id); if (el) el.textContent = text; }
+function kpi(title, value, caption) { return `<div class="kpi-card"><div class="kpi-card-icon">${escapeHTML(kpiIcon(title))}</div><span>${escapeHTML(title)}</span><strong>${escapeHTML(String(value))}</strong><small>${escapeHTML(caption || "")}</small></div>`; }
+function kpiIcon(t) { if (t.includes("血壓")) return "BP"; if (t.includes("心率")) return "HR"; if (t.includes("體重")) return "KG"; if (t.includes("BMI")) return "BMI"; if (t.includes("步數")) return "步"; if (t.includes("運動")) return "動"; if (t.includes("學員")) return "員"; if (t.includes("個案")) return "案"; if (t.includes("FHIR")) return "{}"; if (t.includes("授權")) return "QR"; if (t.includes("區塊鏈")) return "BC"; if (t.includes("報名")) return "報"; if (t.includes("通知")) return "訊"; return t.slice(0, 1); }
+function statusPill(label, className) { const cls = className || ({ "待審核": "pending", "審核通過": "approved", "需補件": "revision", "退件": "rejected" }[label] || "pending"); return `<span class="status ${cls}">${escapeHTML(label)}</span>`; }
+function emptyRow(cols) { return `<tr><td colspan="${cols}" class="empty">目前沒有資料</td></tr>`; }
+function notificationList(limit) { const a = currentAccount(); return state.notifications.filter((i) => i.accountId === "all" || i.accountId === a?.id).slice(0, limit).map((i) => `<p><strong>${escapeHTML(i.title)}</strong><br><span class="muted">${escapeHTML(i.message)}</span></p>`).join("") || `<p class="muted">目前沒有通知。</p>`; }
+function scopeBadges(scopes) { return (scopes || []).map((s) => `<span class="scope-badge">${escapeHTML(s)}</span>`).join("") || `<span class="muted">未指定</span>`; }
+function authorizationStatusBadge(auth) { const v = isAuthorizationValid(auth); return `<span class="auth-badge ${v ? "valid" : "expired"}">${v ? "有效" : "已過期"}</span>`; }
+function authMetric(label, value, unit) { return `<div class="auth-metric"><span>${escapeHTML(label)}</span><strong>${escapeHTML(value)}</strong><small>${escapeHTML(unit || "")}</small></div>`; }
 
 let _toastTimer;
 function showToast(message) {
@@ -1950,82 +1628,37 @@ function showToast(message) {
     _toastTimer = setTimeout(() => toast.classList.remove("show"), 2800);
 }
 
-function getSectionLabel(sectionId) {
-    for (const items of Object.values(NAV_ITEMS)) {
-        const found = items.find(([id]) => id === sectionId);
-        if (found) return found[1];
+function switchAuthTab(tab) {
+    document.getElementById("login-panel")?.classList.toggle("hidden", tab !== "login");
+    document.getElementById("register-panel")?.classList.toggle("hidden", tab !== "register");
+    document.querySelectorAll(".auth-tabs button").forEach((btn) => btn.classList.toggle("active", btn.dataset.tab === tab));
+}
+
+// Close dropdowns when clicking outside
+document.addEventListener("click", (e) => {
+    if (!e.target.closest(".nav-user-wrap")) document.getElementById("nav-user-wrap")?.classList.remove("open");
+    if (!e.target.closest(".nav-dropdown-wrap") && !e.target.closest("#nav-toggle")) {
+        document.querySelectorAll(".nav-dropdown-wrap.open").forEach((w) => w.classList.remove("open"));
     }
-    return "AI Health";
-}
+});
 
-function updateBreadcrumb(sectionId) {
-    const label = getSectionLabel(sectionId);
-    setText("header-breadcrumb", label);
-}
+window.addEventListener("load", initCustomSelects);
 
-function updateDocumentTitle(sectionId) {
-    const label = getSectionLabel(sectionId);
-    document.title = label !== "AI Health"
-        ? `${label} | AI Health Platform`
-        : "AI 健康追蹤與運動管理平台";
-}
-
-function updateNotifBadge() {
-    const account = currentAccount();
-    const count = state.notifications.filter(
-        (item) => item.accountId === "all" || item.accountId === account?.id
-    ).length;
-    const badge = document.getElementById("header-notif-count");
-    if (!badge) return;
-    badge.textContent = count > 0 ? String(count) : "";
-    badge.classList.toggle("hidden", count === 0);
-}
-
-function toggleSidebar() {
-    const sidebar = document.getElementById("sidebar");
-    const overlay = document.getElementById("sidebar-overlay");
-    sidebar?.classList.toggle("open");
-    overlay?.classList.toggle("show");
-}
-
-function closeSidebar() {
-    document.getElementById("sidebar")?.classList.remove("open");
-    document.getElementById("sidebar-overlay")?.classList.remove("show");
-}
-
-window.initDefaultAccounts = initDefaultAccounts;
-window.registerAccount = registerAccount;
+// Window exports
 window.loginAccount = loginAccount;
+window.registerAccount = registerAccount;
 window.demoLogin = demoLogin;
 window.logoutAccount = logoutAccount;
-window.getCurrentRole = getCurrentRole;
-window.applyRolePermissions = applyRolePermissions;
+window.requireAuth = requireAuth;
 window.showSection = showSection;
 window.navigateTo = navigateTo;
-window.startExperience = startExperience;
-window.goHealthInputFromHome = goHealthInputFromHome;
-window.viewFHIRDemo = viewFHIRDemo;
-window.showAIShowcase = showAIShowcase;
-window.scrollToHomeFlow = scrollToHomeFlow;
 window.setTrendRange = setTrendRange;
 window.initCustomSelects = initCustomSelects;
-window.goToRoleHome = goToRoleHome;
-window.updateUserDisplay = updateUserDisplay;
-window.saveState = saveState;
-window.loadState = loadState;
 window.submitProfileSettings = submitProfileSettings;
 window.submitHealthData = submitHealthData;
 window.submitRegistration = submitRegistration;
 window.generateQRCode = generateQRCode;
 window.createAuthorization = createAuthorization;
-window.renderAuthorizedStudents = renderAuthorizedStudents;
-window.renderStudentExerciseData = renderStudentExerciseData;
-window.renderAuthorizedCases = renderAuthorizedCases;
-window.renderCaseNutritionData = renderCaseNutritionData;
-window.isAuthorizationValid = isAuthorizationValid;
-window.getAuthorizationsByRole = getAuthorizationsByRole;
-window.updateCoachDashboard = updateCoachDashboard;
-window.updateNutritionDashboard = updateNutritionDashboard;
 window.addTrainingRecord = addTrainingRecord;
 window.addNutritionRecord = addNutritionRecord;
 window.updateRegistrationStatus = updateRegistrationStatus;
@@ -2037,20 +1670,10 @@ window.toggleAccount = toggleAccount;
 window.copyFHIR = copyFHIR;
 window.resetDemoData = resetDemoData;
 window.showToast = showToast;
-window.toggleSidebar = toggleSidebar;
-window.closeSidebar = closeSidebar;
-
-window.addEventListener("load", () => {
-    initDefaultAccounts();
-    saveState();
-    initCustomSelects();
-    const todayInput = document.getElementById("health-date");
-    if (todayInput) todayInput.value = new Date().toISOString().slice(0, 10);
-    drawQRCode("AI-HEALTH-DEMO");
-    currentSection = "home-section";
-    applyRolePermissions();
-    showSection("home-section");
-    updateBreadcrumb("home-section");
-    updateDocumentTitle("home-section");
-    updateNotifBadge();
-});
+window.toggleNavMenu = toggleNavMenu;
+window.toggleDropdown = toggleDropdown;
+window.toggleUserMenu = toggleUserMenu;
+window.switchAuthTab = switchAuthTab;
+window.initDefaultAccounts = initDefaultAccounts;
+window.saveState = saveState;
+window.loadState = loadState;

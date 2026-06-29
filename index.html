@@ -1,441 +1,153 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 健康追蹤與運動管理平台</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="app-feature" content="profile-height-localStorage" />
+    <meta name="app-feature" content="registration-management-ui" />
+    <title>登入 | AI Health Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-    <div class="app-shell">
-        <aside class="sidebar">
-            <div class="brand">
-                <div class="brand-mark">+</div>
-                <div>
-                    <strong>AI Health</strong>
-                    <span>FHIR Demo Platform</span>
+<body class="auth-body">
+    <div class="auth-page">
+        <div class="auth-container">
+            <!-- Hero -->
+            <div class="auth-hero">
+                <div class="auth-hero-inner">
+                    <div class="auth-brand">
+                        <span class="auth-brand-icon">AI</span>
+                        <div>
+                            <div class="auth-brand-name">AI Health Platform</div>
+                            <div class="auth-brand-sub">FHIR 健康追蹤與運動管理平台</div>
+                        </div>
+                    </div>
+                    <h1 class="auth-hero-title">智能健康管理<br/>從數據開始</h1>
+                    <p class="auth-hero-desc">整合 HL7 FHIR R4 標準、AI 健康建議、角色權限管理與區塊鏈授權紀錄，打造全方位健康追蹤平台。</p>
+                    <div class="auth-chips">
+                        <span class="auth-chip">FHIR R4</span>
+                        <span class="auth-chip">AI 建議</span>
+                        <span class="auth-chip">角色權限</span>
+                        <span class="auth-chip">區塊鏈</span>
+                        <span class="auth-chip">競賽報名</span>
+                    </div>
+                    <div class="auth-hero-stats">
+                        <div class="auth-stat"><strong>4</strong><span>使用角色</span></div>
+                        <div class="auth-stat"><strong>7+</strong><span>FHIR 資源型別</span></div>
+                        <div class="auth-stat"><strong>100%</strong><span>前端展示</span></div>
+                    </div>
                 </div>
             </div>
 
-            <div class="account-chip" id="account-chip">
-                <div class="avatar" id="account-avatar">G</div>
-                <div>
-                    <strong id="account-name">尚未登入</strong>
-                    <span id="account-role">Guest</span>
-                    <small id="account-mode"></small>
-                </div>
-            </div>
-
-            <nav class="sidebar-nav" id="sidebar-nav"></nav>
-
-            <div class="sidebar-actions">
-                <button class="ghost-button" id="logout-button" onclick="logoutAccount()">登出</button>
-                <button class="danger-outline" id="reset-button" onclick="resetDemoData()">重置 Demo 資料</button>
-            </div>
-        </aside>
-
-        <main class="main">
-            <section id="home-section" class="content-section active">
-                <div class="hero home-hero">
-                    <div class="home-hero-copy">
-                        <p class="eyebrow">FHIR + AI Health Platform</p>
-                        <h1>AI 健康追蹤與運動管理平台</h1>
-                        <p>用 FHIR 整合健康資料，用 AI 提供個人化運動與健康建議。</p>
-                        <div class="hero-actions">
-                            <button class="primary-button" onclick="startExperience()">開始體驗</button>
-                            <button class="secondary-button" onclick="viewFHIRDemo()">查看 FHIR Demo</button>
-                            <button class="secondary-button" onclick="scrollToHomeFlow()">了解資料流程</button>
-                        </div>
-                        <div class="hero-actions compact-actions">
-                            <button class="secondary-button" onclick="goHealthInputFromHome()">新增健康資料</button>
-                            <button class="secondary-button" onclick="showAIShowcase()">AI 分析展示</button>
-                        </div>
+            <!-- Card -->
+            <div class="auth-card-wrap">
+                <div class="auth-card">
+                    <h2 class="auth-card-title">歡迎使用</h2>
+                    <div class="auth-tabs" role="tablist">
+                        <button class="active" data-tab="login" onclick="switchAuthTab('login')">帳號登入</button>
+                        <button data-tab="register" onclick="switchAuthTab('register')">帳號註冊</button>
                     </div>
-                    <div class="home-hero-panel">
-                        <div class="metric-tile"><span>FHIR Resources</span><strong id="hero-fhir-count">0</strong></div>
-                        <div class="metric-tile"><span>AI 分析模組</span><strong id="hero-ai-modules">4</strong></div>
-                        <div class="metric-tile"><span>角色權限</span><strong id="hero-role-count">4</strong></div>
-                        <div class="metric-tile"><span>授權紀錄</span><strong id="hero-auth-count">0</strong></div>
-                    </div>
-                </div>
 
-                <div class="home-section-block">
-                    <div class="section-heading"><h2>平台數據</h2><p>快速掌握 Demo 目前的資料規模與功能模組。</p></div>
-                    <div class="home-data-grid">
-                        <article class="home-data-card"><span>FHIR Resources</span><strong id="home-fhir-resources">0</strong><p>Patient、Observation、Practitioner 與 Bundle。</p></article>
-                        <article class="home-data-card"><span>AI 分析模組</span><strong>4</strong><p>健康、運動、營養與管理儀表分析。</p></article>
-                        <article class="home-data-card"><span>角色權限</span><strong>4</strong><p>一般使用者、健身教練、營養師、系統管理員。</p></article>
-                        <article class="home-data-card"><span>授權紀錄</span><strong id="home-auth-count">0</strong><p>使用者可授權教練或營養師查看資料。</p></article>
-                    </div>
-                </div>
-
-                <div class="home-section-block">
-                    <div class="section-heading"><h2>四角色工作台</h2><p>每種角色都有不同首頁與可查看資料。</p></div>
-                    <div class="role-card-grid">
-                        <article class="role-card"><div class="role-icon">U</div><h3>一般使用者</h3><p>新增健康紀錄、檢視 FHIR JSON、查看 AI 健康建議與授權分享。</p><small>可查看：個人健康、FHIR、報名、通知</small></article>
-                        <article class="role-card"><div class="role-icon">C</div><h3>健身教練</h3><p>追蹤被授權學員的運動紀錄、心率趨勢與訓練建議。</p><small>可查看：學員運動、心率、訓練紀錄</small></article>
-                        <article class="role-card"><div class="role-icon">N</div><h3>營養師</h3><p>分析被授權個案的 BMI、體重、血壓與飲食建議。</p><small>可查看：個案 BMI、體重、血壓、營養紀錄</small></article>
-                        <article class="role-card"><div class="role-icon">A</div><h3>系統管理員</h3><p>管理帳號、FHIR 紀錄、授權紀錄、報名審核與系統設定。</p><small>可查看：全站帳號、紀錄、審核、區塊鏈存證</small></article>
-                    </div>
-                </div>
-
-                <div class="home-section-block" id="home-flow-section">
-                    <div class="section-heading"><h2>FHIR 資料流程</h2><p>從健康資料輸入到授權分享與存證的完整展示流程。</p></div>
-                    <div class="flow-strip">
-                        <div class="flow-card">健康資料輸入</div>
-                        <div class="flow-card">FHIR Observation</div>
-                        <div class="flow-card">HAPI FHIR Server</div>
-                        <div class="flow-card">AI 分析</div>
-                        <div class="flow-card">授權分享</div>
-                        <div class="flow-card">區塊鏈存證</div>
-                    </div>
-                </div>
-
-                <div class="home-section-block">
-                    <div class="section-heading"><h2>Demo 劇本</h2><p>建議展示順序，所有按鈕都可直接互動。</p></div>
-                    <div class="demo-step-grid">
-                        <button onclick="showSection('account-login-section')"><strong>Step 1</strong><span>使用者登入</span></button>
-                        <button onclick="goHealthInputFromHome()"><strong>Step 2</strong><span>新增健康紀錄</span></button>
-                        <button onclick="viewFHIRDemo()"><strong>Step 3</strong><span>產生 FHIR JSON</span></button>
-                        <button onclick="showAIShowcase()"><strong>Step 4</strong><span>AI 分析</span></button>
-                        <button onclick="navigateTo('share-section')"><strong>Step 5</strong><span>授權教練 / 營養師</span></button>
-                        <button onclick="navigateTo('admin-dashboard-section')"><strong>Step 6</strong><span>管理員查看紀錄</span></button>
-                    </div>
-                </div>
-            </section>
-
-            <section id="account-login-section" class="content-section">
-                <div class="login-layout">
-                    <div class="login-intro">
-                        <p class="eyebrow">FHIR + AI Health Platform</p>
-                        <h2>AI 健康追蹤與運動管理平台</h2>
-                        <p>本平台以純前端展示健康資料追蹤、FHIR JSON 檢視、授權分享、教練訓練建議、營養分析與系統管理流程。</p>
-                        <div class="feature-list">
-                            <span>角色權限控管</span>
-                            <span>localStorage 登入狀態</span>
-                            <span>四種專屬 Dashboard</span>
-                        </div>
-                    </div>
-                    <div class="login-card">
-                        <form id="login-form" onsubmit="loginAccount(event)">
-                            <h2>帳號登入</h2>
-                            <label>帳號<input id="login-username" autocomplete="username" required></label>
-                            <label>密碼<input id="login-password" type="password" autocomplete="current-password" required></label>
-                            <button class="primary-button full-width" type="submit">登入</button>
+                    <!-- Login -->
+                    <div class="auth-form-panel" id="login-panel">
+                        <form onsubmit="loginAccount(event)">
+                            <div class="form-group">
+                                <label for="login-username">帳號</label>
+                                <input id="login-username" type="text" placeholder="輸入帳號" required autocomplete="username" />
+                            </div>
+                            <div class="form-group">
+                                <label for="login-password">密碼</label>
+                                <input id="login-password" type="password" placeholder="輸入密碼" required autocomplete="current-password" />
+                            </div>
+                            <button type="submit" class="auth-submit-btn">登入</button>
                         </form>
+                        <div class="demo-divider"><span>或使用 Demo 快速體驗</span></div>
+                        <div class="demo-grid">
+                            <button class="demo-btn" onclick="demoLogin('user')">
+                                <span class="demo-role-icon">👤</span><span>一般使用者</span>
+                            </button>
+                            <button class="demo-btn" onclick="demoLogin('coach')">
+                                <span class="demo-role-icon">🏋️</span><span>健身教練</span>
+                            </button>
+                            <button class="demo-btn" onclick="demoLogin('nutritionist')">
+                                <span class="demo-role-icon">🥗</span><span>營養師</span>
+                            </button>
+                            <button class="demo-btn" onclick="demoLogin('admin')">
+                                <span class="demo-role-icon">⚙️</span><span>系統管理員</span>
+                            </button>
+                        </div>
+                        <p class="auth-hint">Demo 帳號密碼：user01 / 123456（各角色同理）</p>
+                    </div>
 
-                        <div class="demo-accounts">
-                            <h3>預設帳號</h3>
-                            <div class="account-hints">
-                                <code>user01 / 123456</code>
-                                <code>coach01 / 123456</code>
-                                <code>nutrition01 / 123456</code>
-                                <code>admin01 / 123456</code>
+                    <!-- Register -->
+                    <div class="auth-form-panel hidden" id="register-panel">
+                        <form onsubmit="registerAccount(event)">
+                            <div class="form-row-2">
+                                <div class="form-group">
+                                    <label for="register-name">姓名</label>
+                                    <input id="register-name" type="text" placeholder="真實姓名" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="register-role">角色</label>
+                                    <select id="register-role" required>
+                                        <option value="">選擇角色</option>
+                                        <option value="user">一般使用者</option>
+                                        <option value="coach">健身教練</option>
+                                        <option value="nutritionist">營養師</option>
+                                        <option value="admin">系統管理員</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="demo-login">
-                            <h3>Demo 快速登入</h3>
-                            <div class="demo-login-grid">
-                                <button type="button" onclick="demoLogin('user')">一般使用者 Demo</button>
-                                <button type="button" onclick="demoLogin('coach')">健身教練 Demo</button>
-                                <button type="button" onclick="demoLogin('nutritionist')">營養師 Demo</button>
-                                <button type="button" onclick="demoLogin('admin')">系統管理員 Demo</button>
+                            <div class="form-group">
+                                <label for="register-email">Email</label>
+                                <input id="register-email" type="email" placeholder="example@mail.com" required autocomplete="email" />
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="account-register-section" class="content-section">
-                <div class="section-heading">
-                    <h2>帳號註冊</h2>
-                    <p>註冊資料會儲存在 localStorage，登入後依角色顯示對應功能。</p>
-                </div>
-                <form class="card form-grid" id="register-form" onsubmit="registerAccount(event)">
-                    <label>姓名<input id="register-name" required></label>
-                    <label>Email<input id="register-email" type="email" required></label>
-                    <label>帳號<input id="register-username" required></label>
-                    <label>密碼<input id="register-password" type="password" minlength="6" required></label>
-                    <label>確認密碼<input id="register-password-confirm" type="password" minlength="6" required></label>
-                    <label>手機號碼<input id="register-phone" required></label>
-                    <label>學校／單位<input id="register-organization" required></label>
-                    <label>角色<select id="register-role" required>
-                        <option value="user">一般使用者 user</option>
-                        <option value="coach">健身教練 coach</option>
-                        <option value="nutritionist">營養師 nutritionist</option>
-                        <option value="admin">系統管理員 admin</option>
-                    </select></label>
-                    <div class="form-actions">
-                        <button class="primary-button" type="submit">註冊</button>
-                        <button class="secondary-button" type="button" onclick="showSection('account-login-section')">已有帳號，前往登入</button>
-                    </div>
-                </form>
-            </section>
-
-            <section id="user-dashboard-section" class="content-section">
-                <div class="role-dashboard">
-                    <div class="role-dashboard-header">
-                        <div>
-                            <p class="eyebrow">Personal Health Home</p>
-                            <h2>一般使用者首頁</h2>
-                            <p>快速掌握今日健康數據、FHIR JSON、AI 分析與授權分享狀態。</p>
-                        </div>
-                        <div class="role-dashboard-badge">USER</div>
-                    </div>
-                    <div class="role-kpi-grid" id="user-dashboard-cards"></div>
-                    <div class="role-action-grid">
-                        <button class="role-dashboard-btn primary" onclick="showSection('health-input-section')"><span>＋</span>新增健康資料</button>
-                        <button class="role-dashboard-btn" onclick="showSection('fhir-viewer-section')"><span>{}</span>查看 FHIR JSON</button>
-                        <button class="role-dashboard-btn" onclick="showSection('share-section')"><span>QR</span>授權分享</button>
-                    </div>
-                    <div class="grid-2">
-                        <div class="role-summary-card"><h3>AI 健康建議</h3><div id="user-ai-summary"></div></div>
-                        <div class="role-summary-card"><h3>通知中心</h3><div id="user-notification-summary"></div></div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="coach-dashboard-section" class="content-section">
-                <div class="role-dashboard">
-                    <div class="role-dashboard-header">
-                        <div>
-                            <p class="eyebrow">Coach Home</p>
-                            <h2>健身教練首頁</h2>
-                            <p>檢視被授權學員、運動達成率、心率異常與 AI 訓練建議。</p>
-                        </div>
-                        <div class="role-dashboard-badge">COACH</div>
-                    </div>
-                    <div class="role-kpi-grid" id="coach-dashboard-cards"></div>
-                    <div class="grid-2">
-                        <div class="role-summary-card"><h3>學員運動趨勢摘要</h3><div id="coach-trend-summary"></div></div>
-                        <div class="role-summary-card"><h3>AI 訓練建議</h3><div id="coach-ai-summary"></div></div>
-                    </div>
-                    <div class="role-action-grid">
-                        <button class="role-dashboard-btn primary" onclick="showSection('student-list-section')"><span>名</span>學員列表</button>
-                        <button class="role-dashboard-btn" onclick="showSection('student-exercise-section')"><span>跑</span>查看運動紀錄</button>
-                    </div>
-                </div>
-            </section>
-
-            <section id="nutrition-dashboard-section" class="content-section">
-                <div class="role-dashboard">
-                    <div class="role-dashboard-header">
-                        <div>
-                            <p class="eyebrow">Nutrition Home</p>
-                            <h2>營養師首頁</h2>
-                            <p>聚焦 BMI、體重、血壓風險與 AI 飲食建議。</p>
-                        </div>
-                        <div class="role-dashboard-badge">NUTRITION</div>
-                    </div>
-                    <div class="role-kpi-grid" id="nutrition-dashboard-cards"></div>
-                    <div class="grid-2">
-                        <div class="role-summary-card"><h3>個案營養風險摘要</h3><div id="nutrition-risk-summary"></div></div>
-                        <div class="role-summary-card"><h3>AI 飲食建議</h3><div id="nutrition-ai-summary"></div></div>
-                    </div>
-                    <div class="role-action-grid">
-                        <button class="role-dashboard-btn primary" onclick="showSection('case-list-section')"><span>案</span>個案列表</button>
-                        <button class="role-dashboard-btn" onclick="showSection('bmi-analysis-section')"><span>BMI</span>查看 BMI 分析</button>
-                    </div>
-                </div>
-            </section>
-
-            <section id="admin-dashboard-section" class="content-section">
-                <div class="role-dashboard">
-                    <div class="role-dashboard-header">
-                        <div>
-                            <p class="eyebrow">System Admin Home</p>
-                            <h2>系統管理員首頁</h2>
-                            <p>統整帳號、FHIR Resource、Observation、授權、區塊鏈與報名審核資料。</p>
-                        </div>
-                        <div class="role-dashboard-badge">ADMIN</div>
-                    </div>
-                    <div class="role-kpi-grid" id="admin-dashboard-cards"></div>
-                    <div class="role-summary-card"><h3>系統通知摘要</h3><div id="admin-system-summary"></div></div>
-                    <div class="role-action-grid">
-                        <button class="role-dashboard-btn primary" onclick="showSection('account-management-section')"><span>帳</span>帳號管理</button>
-                        <button class="role-dashboard-btn" onclick="showSection('registration-review-section')"><span>審</span>報名審核</button>
-                    </div>
-                </div>
-            </section>
-
-            <section id="health-input-section" class="content-section">
-                <div class="section-heading"><h2>新增健康資料</h2><p>輸入血壓、心率、體重、BMI 與運動資料。</p></div>
-                <form class="card form-grid" id="health-form" onsubmit="submitHealthData(event)">
-                    <label>日期<input id="health-date" type="date" required></label>
-                    <label>收縮壓<input id="health-systolic" type="number" value="122" required></label>
-                    <label>舒張壓<input id="health-diastolic" type="number" value="78" required></label>
-                    <label>體重 kg<input id="health-weight" type="number" step="0.1" value="70.5" required></label>
-                    <label>身高 cm<input id="health-height" type="number" value="170" required></label>
-                    <label>心率 bpm<input id="health-heart-rate" type="number" value="72" required></label>
-                    <label>步數<input id="health-steps" type="number" value="8500" required></label>
-                    <label>運動分鐘<input id="health-exercise" type="number" value="35" required></label>
-                    <div class="form-actions"><button class="primary-button" type="submit">儲存健康資料</button></div>
-                </form>
-            </section>
-
-            <section id="health-trend-section" class="content-section">
-                <div class="section-heading"><h2>健康趨勢</h2><p>使用 Canvas 顯示血壓、體重、BMI、心率、步數與運動消耗趨勢。</p></div>
-                <div class="trend-toolbar">
-                    <button class="range-button active" data-range="7" onclick="setTrendRange(7)">7 天</button>
-                    <button class="range-button" data-range="30" onclick="setTrendRange(30)">30 天</button>
-                    <button class="range-button" data-range="90" onclick="setTrendRange(90)">90 天</button>
-                    <button class="range-button" data-range="all" onclick="setTrendRange('all')">全部</button>
-                </div>
-                <div class="kpi-grid" id="trend-summary-cards"></div>
-                <div id="trend-data-hint" class="trend-hint"></div>
-                <div class="chart-grid">
-                    <div class="card chart-card"><h3>血壓雙折線圖</h3><canvas id="bp-chart" height="240"></canvas></div>
-                    <div class="card chart-card"><h3>體重與 BMI 雙軸圖</h3><canvas id="weight-chart" height="240"></canvas></div>
-                    <div class="card chart-card"><h3>心率區間圖</h3><canvas id="heart-chart" height="240"></canvas></div>
-                    <div class="card chart-card"><h3>步數長條圖</h3><canvas id="steps-chart" height="240"></canvas></div>
-                    <div class="card chart-card full-chart"><h3>運動時間與熱量消耗圖</h3><canvas id="exercise-chart" height="240"></canvas></div>
-                </div>
-                <div class="card trend-ai-summary" id="trend-ai-summary"></div>
-                <div class="chart-tooltip" id="chart-tooltip"></div>
-            </section>
-
-            <section id="ai-health-section" class="content-section">
-                <div class="section-heading"><h2>AI 健康建議</h2><p>由前端規則分析健康紀錄，產生健康、飲食與運動建議。</p></div>
-                <div id="ai-health-panel"></div>
-            </section>
-
-            <section id="fhir-viewer-section" class="content-section">
-                <div class="section-heading"><h2>FHIR JSON</h2><p>檢視 Patient、Observation、Practitioner 組成的 FHIR Bundle。</p></div>
-                <div class="code-toolbar"><button class="secondary-button" onclick="copyFHIR()">複製 JSON</button></div>
-                <pre class="code-block" id="fhir-json-output"></pre>
-            </section>
-
-            <section id="share-section" class="content-section">
-                <div class="section-heading"><h2>授權分享</h2><p>產生授權紀錄，讓教練或營養師檢視特定資料範圍。</p></div>
-                <div class="split-layout">
-                    <form class="card" onsubmit="generateQRCode(event)">
-                        <label>分享對象<select id="share-target-role">
-                            <option value="coach">健身教練</option>
-                            <option value="nutritionist">營養師</option>
-                            <option value="doctor">醫師</option>
-                        </select></label>
-                        <div class="field-group">
-                            <strong>授權資料範圍</strong>
-                            <div class="checkbox-grid">
-                                <label><input type="checkbox" name="share-data-scope" value="血壓">血壓</label>
-                                <label><input type="checkbox" name="share-data-scope" value="體重">體重</label>
-                                <label><input type="checkbox" name="share-data-scope" value="BMI">BMI</label>
-                                <label><input type="checkbox" name="share-data-scope" value="心率">心率</label>
-                                <label><input type="checkbox" name="share-data-scope" value="步數">步數</label>
-                                <label><input type="checkbox" name="share-data-scope" value="運動紀錄">運動紀錄</label>
+                            <div class="form-group">
+                                <label for="register-username">帳號</label>
+                                <input id="register-username" type="text" placeholder="英數字帳號" required autocomplete="username" />
                             </div>
-                        </div>
-                        <label>授權期限<select id="share-duration">
-                            <option value="24小時">24 小時</option>
-                            <option value="7天" selected>7 天</option>
-                            <option value="30天">30 天</option>
-                            <option value="永久授權">永久授權</option>
-                        </select></label>
-                        <button class="primary-button full-width" type="submit">產生授權 QR Code</button>
-                    </form>
-                    <div class="card qr-card">
-                        <div id="qrcode" class="qrcode-box">
-                            <canvas id="qr-canvas" width="180" height="180"></canvas>
-                        </div>
-                        <div class="qr-detail-list">
-                            <p><span>授權對象</span><strong id="qr-target">尚未產生</strong></p>
-                            <p><span>分享範圍</span><strong id="qr-scope">尚未產生</strong></p>
-                            <p><span>授權期限</span><strong id="qr-expire">尚未產生</strong></p>
-                            <p><span>Auth Hash</span><strong id="qr-token">尚未產生授權</strong></p>
-                        </div>
+                            <div class="form-row-2">
+                                <div class="form-group">
+                                    <label for="register-password">密碼</label>
+                                    <input id="register-password" type="password" placeholder="至少 6 碼" required autocomplete="new-password" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="register-password-confirm">確認密碼</label>
+                                    <input id="register-password-confirm" type="password" placeholder="再次輸入" required autocomplete="new-password" />
+                                </div>
+                            </div>
+                            <div class="form-row-2">
+                                <div class="form-group">
+                                    <label for="register-phone">手機</label>
+                                    <input id="register-phone" type="tel" placeholder="09XXXXXXXX" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="register-organization">單位</label>
+                                    <input id="register-organization" type="text" placeholder="學校或組織" required />
+                                </div>
+                            </div>
+                            <button type="submit" class="auth-submit-btn">建立帳號</button>
+                        </form>
                     </div>
                 </div>
-            </section>
-
-            <section id="registration-section" class="content-section">
-                <div class="section-heading"><h2>競賽報名</h2><p>提交 FHIR 創新應用競賽報名資料。</p></div>
-                <form class="card form-grid" id="registration-form" onsubmit="submitRegistration(event)">
-                    <label>團隊名稱<input id="reg-team-name" required></label>
-                    <label>專案名稱<input id="reg-project-name" required></label>
-                    <label>作品類別<select id="reg-category" required>
-                        <option value="健康管理">健康管理</option>
-                        <option value="運動健康">運動健康</option>
-                        <option value="營養照護">營養照護</option>
-                        <option value="FHIR 整合">FHIR 整合</option>
-                    </select></label>
-                    <label>負責人<input id="reg-leader-name" required></label>
-                    <label>Email<input id="reg-email" type="email" required></label>
-                    <label>手機號碼<input id="reg-phone" required></label>
-                    <label>學校／單位<input id="reg-organization" required></label>
-                    <label>成員 1<input id="reg-member-1"></label>
-                    <label>成員 2<input id="reg-member-2"></label>
-                    <label>成員 3<input id="reg-member-3"></label>
-                    <label class="full-span">作品說明<textarea id="reg-description" required></textarea></label>
-                    <label>使用角色<input id="reg-roles" required></label>
-                    <label>使用 FHIR Resources<input id="reg-fhir-resources" required></label>
-                    <label>GitHub Repository URL<input id="reg-github-url" type="url"></label>
-                    <label>Demo URL<input id="reg-demo-url" type="url"></label>
-                    <label class="full-span">備註<textarea id="reg-note"></textarea></label>
-                    <div class="form-actions"><button class="primary-button" type="submit">送出報名</button></div>
-                </form>
-            </section>
-
-            <section id="my-registration-section" class="content-section">
-                <div class="section-heading"><h2>我的報名</h2><p>檢視目前帳號送出的報名資料與審核狀態。</p></div>
-                <div class="card table-wrap"><table><thead><tr><th>編號</th><th>團隊</th><th>專案</th><th>狀態</th><th>審核意見</th><th>時間</th></tr></thead><tbody id="my-registration-body"></tbody></table></div>
-            </section>
-
-            <section id="student-list-section" class="content-section">
-                <div class="section-heading"><h2>學員列表</h2><p>顯示已授權給教練的使用者。</p></div>
-                <div class="card table-wrap"><table><thead><tr><th>學員姓名</th><th>授權資料範圍</th><th>授權期限</th><th>授權狀態</th><th>操作</th></tr></thead><tbody id="student-list-body"></tbody></table></div>
-            </section>
-            <section id="student-exercise-section" class="content-section"><div class="section-heading"><h2>學員運動紀錄</h2><p>檢視學員最新運動表現。</p></div><div id="student-exercise-panel"></div></section>
-            <section id="student-heart-rate-section" class="content-section"><div class="section-heading"><h2>學員心率趨勢</h2><p>追蹤學員心率變化。</p></div><div class="card"><canvas id="student-heart-chart" height="240"></canvas></div></section>
-            <section id="training-advice-section" class="content-section"><div class="section-heading"><h2>AI 訓練建議</h2><p>依學員運動量與心率給出訓練建議。</p></div><div id="training-advice-panel"></div></section>
-            <section id="training-record-section" class="content-section">
-                <div class="section-heading"><h2>訓練紀錄</h2><p>新增教練訓練建議紀錄。</p></div>
-                <form class="card form-grid" onsubmit="addTrainingRecord(event)">
-                    <label>學員<input id="training-student" required></label>
-                    <label>標題<input id="training-title" required></label>
-                    <label class="full-span">內容<textarea id="training-content" required></textarea></label>
-                    <div class="form-actions"><button class="primary-button">新增訓練紀錄</button></div>
-                </form>
-                <div id="training-record-list"></div>
-            </section>
-
-            <section id="case-list-section" class="content-section">
-                <div class="section-heading"><h2>個案列表</h2><p>顯示已授權給營養師的使用者。</p></div>
-                <div class="card table-wrap"><table><thead><tr><th>個案姓名</th><th>授權資料範圍</th><th>授權期限</th><th>授權狀態</th><th>操作</th></tr></thead><tbody id="case-list-body"></tbody></table></div>
-            </section>
-            <section id="bmi-analysis-section" class="content-section"><div class="section-heading"><h2>BMI 分析</h2><p>檢視個案 BMI 狀態。</p></div><div id="bmi-analysis-panel"></div></section>
-            <section id="weight-trend-section" class="content-section"><div class="section-heading"><h2>體重趨勢</h2><p>追蹤個案體重變化。</p></div><div class="card"><canvas id="nutrition-weight-chart" height="240"></canvas></div></section>
-            <section id="blood-pressure-section" class="content-section"><div class="section-heading"><h2>血壓提醒</h2><p>檢視個案血壓偏高提醒。</p></div><div id="blood-pressure-panel"></div></section>
-            <section id="diet-advice-section" class="content-section"><div class="section-heading"><h2>AI 飲食建議</h2><p>依 BMI、體重與血壓產生飲食建議。</p></div><div id="diet-advice-panel"></div></section>
-            <section id="nutrition-record-section" class="content-section">
-                <div class="section-heading"><h2>營養紀錄</h2><p>新增營養師個案建議紀錄。</p></div>
-                <form class="card form-grid" onsubmit="addNutritionRecord(event)">
-                    <label>個案<input id="nutrition-case" required></label>
-                    <label>標題<input id="nutrition-title" required></label>
-                    <label class="full-span">內容<textarea id="nutrition-content" required></textarea></label>
-                    <div class="form-actions"><button class="primary-button">新增營養紀錄</button></div>
-                </form>
-                <div id="nutrition-record-list"></div>
-            </section>
-
-            <section id="account-management-section" class="content-section"><div class="section-heading"><h2>帳號管理</h2><p>管理平台帳號狀態。</p></div><div class="card table-wrap"><table><thead><tr><th>姓名</th><th>帳號</th><th>Email</th><th>角色</th><th>狀態</th><th>操作</th></tr></thead><tbody id="account-management-body"></tbody></table></div></section>
-            <section id="user-management-section" class="content-section"><div class="section-heading"><h2>使用者管理</h2><p>檢視所有帳號基本資料。</p></div><div class="card table-wrap"><table><thead><tr><th>姓名</th><th>Email</th><th>角色</th><th>學校／單位</th><th>手機</th></tr></thead><tbody id="user-management-body"></tbody></table></div></section>
-            <section id="fhir-record-section" class="content-section"><div class="section-heading"><h2>FHIR Resource 紀錄</h2><p>檢視使用者 FHIR Bundle。</p></div><div id="fhir-record-list"></div></section>
-            <section id="observation-record-section" class="content-section"><div class="section-heading"><h2>Observation 紀錄</h2><p>統計健康紀錄產生的 Observation 數量。</p></div><div id="observation-record-panel"></div></section>
-            <section id="authorization-record-section" class="content-section"><div class="section-heading"><h2>授權紀錄</h2><p>檢視資料授權紀錄。</p></div><div class="card table-wrap"><table><thead><tr><th>使用者</th><th>對象</th><th>範圍</th><th>Token</th><th>時間</th></tr></thead><tbody id="authorization-record-body"></tbody></table></div></section>
-            <section id="blockchain-section" class="content-section"><div class="section-heading"><h2>區塊鏈紀錄</h2><p>模擬授權與資料寫入雜湊紀錄。</p></div><div class="card table-wrap"><table><thead><tr><th>Hash</th><th>來源</th><th>事件</th><th>時間</th></tr></thead><tbody id="blockchain-body"></tbody></table></div></section>
-            <section id="registration-list-section" class="content-section"><div class="section-heading"><h2>報名列表</h2><p>檢視所有競賽報名資料。</p></div><div class="card table-wrap"><table><thead><tr><th>編號</th><th>團隊</th><th>專案</th><th>類別</th><th>負責人</th><th>Email</th><th>狀態</th><th>時間</th></tr></thead><tbody id="registration-list-body"></tbody></table></div></section>
-            <section id="registration-review-section" class="content-section"><div class="section-heading"><h2>報名審核</h2><p>審核待處理報名資料。</p></div><div id="registration-review-panel"></div></section>
-            <section id="system-setting-section" class="content-section"><div class="section-heading"><h2>系統設定</h2><p>重置 Demo 資料與檢視系統通知。</p></div><div class="card"><button class="danger-button" onclick="resetDemoData()">重置 Demo 資料</button></div><div class="timeline" id="system-notification-list"></div></section>
-
-            <section id="notification-section" class="content-section">
-                <div class="section-heading"><h2>通知中心</h2><p>顯示目前帳號可見的系統通知。</p></div>
-                <div class="timeline" id="notification-list"></div>
-            </section>
-        </main>
+            </div>
+        </div>
     </div>
 
-    <div class="toast" id="toast"></div>
-    <script src="script.js"></script>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="shared.js"></script>
+    <script>
+        (function () {
+            initDefaultAccounts();
+            saveState();
+            const s = loadState();
+            if ((s.currentAccount || s.demoMode) && s.role && s.role !== "guest") {
+                const pages = { user: "app-user.html", coach: "app-coach.html", nutritionist: "app-nutrition.html", admin: "app-admin.html" };
+                if (pages[s.role]) window.location.href = pages[s.role];
+            }
+        })();
+    </script>
 </body>
 </html>
